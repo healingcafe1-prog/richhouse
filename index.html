@@ -655,7 +655,30 @@ var LISTINGS = [
     img:'https://sspark.genspark.ai/cfimages?u1=AgCI7eWUsyalNQ9bpZVoJWZy5sdlWYtM1oevmh30LcNgDhimT6fDH1NpusJKA%2FMafm5qvfwFeHf6cq1%2FJXT82Rcr0nBjtVhDCdCGoDe%2BnrMDIh0UKQ%3D%3D&u2=Uiy4QGFgUxhiJ0TR&width=800',
     deals:{ sale:{price:5800, count:1, verified:true}, jeonse:null, wolse:null, direct:{dtype:'sale', price:5500, verified:true}, auction:null },
     realprice:[{d:'2025-06',p:5000},{d:'2026-01',p:5300},{d:'2026-07',p:5600}],
-    agent:'논산연무공인중개사', agentType:'공인중개사', region2:'충청남도 논산시' }
+    agent:'논산연무공인중개사', agentType:'공인중개사', region2:'충청남도 논산시' },
+
+  /* 파라곤2차 312동 1층 */
+  { id:'L022', addr:'청주시 흥덕구 오송읍 봉산리 오송역파라곤센트럴시티2차 312동 1층', region:'오송', type:'아파트', area:84, floor:1, rooms:3, baths:2, park:true, elev:true, confirmed:'2026-08-16',
+    img:'https://sspark.genspark.ai/cfimages?u1=YaSzt%2B%2B%2FiJ%2B502mjE5jh5dTqhVXGNyyW%2B6rj2hL2GApeQwGu8%2Bf28va8cRSXef3Vl0Yc851qMKcvwsntIkn5Tswj2Nts7cfKHVS13uLcqcS6Xt1uNvBgF52KoIM8x8Fo2v30uAyVW3gyLmj2dcXd1WAsJvxVqQVmEmIbt8yxbNTG&u2=D5DMsPUAc6pZGfl%2F&width=800',
+    highlight:['1층 단독호','4면 공원뷰','오송역 5분','롯데시네마 인접','초·중학교 도보권','테라스 활용 가능'],
+    locDetail:{
+      school:'오송초등학교 도보 5분 · 오송중학교 도보 7분 — 안전한 통학로',
+      culture:'롯데시네마 오송 차량 3분 · 이마트 오송점 차량 4분',
+      transit:'오송역(KTX·SRT·청주공항 연결) 차량 5분 · 버스정류장 도보 2분',
+      nature:'4면 공원 조망 — 봉산근린공원·오송생명과학단지 녹지',
+      living:'이마트 오송점 차량 4분 · 롯데마트 오창점 10분 · 오송보건의료행정타운',
+      space:'전용 84㎡ 3베드 · 1층 단독호 — 테라스 공간 활용, 외부 직접 출입 가능'
+    },
+    deals:{
+      sale:{price:47000, count:1, verified:true},
+      jeonse:{price:30000, count:1, verified:true},
+      wolse:{deposit:3000, rent:95, mgmt:12, count:1, verified:true},
+      direct:{dtype:'sale', price:47000, verified:true},
+      auction:null
+    },
+    realprice:[{d:'2025-06',p:40000},{d:'2025-09',p:42000},{d:'2025-12',p:44000},{d:'2026-03',p:45500},{d:'2026-06',p:46500},{d:'2026-08',p:47000}],
+    fairPrice:{low:48000, high:53000, label:'적정가 (인근 고층 기준)'},
+    agent:'오송역파라곤공인중개사', agentType:'공인중개사', region2:'충북 청주시 흥덕구' }
 ];
 
 var FINANCE = [
@@ -1064,7 +1087,7 @@ function pageDetail(id){
 
   // 입지정보 — 파라곤2차 전용 상세 어필, 기타 매물 기본 정보
   html += '<div class="dsection"><h3><span class="num">04</span> 입지정보</h3>';
-  var isParagon = ['L009','L010','L011','L012'].indexOf(l.id) >= 0;
+  var isParagon = ['L009','L010','L011','L012','L022'].indexOf(l.id) >= 0;
   if(isParagon){
     var ld = l.locDetail || {};
     /* 하이라이트 뱃지 */
