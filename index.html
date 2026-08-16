@@ -98,7 +98,9 @@ section.block{padding:52px 0;border-bottom:1px solid var(--line);}
 .cardgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
 .pcard{background:#fff;border:1px solid var(--line);border-radius:2px;overflow:hidden;transition:.15s;cursor:pointer;}
 .pcard:hover{border-color:var(--ink);box-shadow:0 10px 24px rgba(20,33,61,.08);}
-.pcard .thumb{height:120px;background:linear-gradient(135deg,var(--paper-2),#E7DFCB);display:flex;align-items:center;justify-content:center;font-size:34px;position:relative;}
+.pcard .thumb{height:150px;background:linear-gradient(135deg,var(--paper-2),#E7DFCB);display:flex;align-items:center;justify-content:center;font-size:34px;position:relative;overflow:hidden;}
+.pcard .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease;}
+.pcard:hover .thumb img{transform:scale(1.04);}
 .pcard .thumb .badge{position:absolute;top:8px;left:8px;background:var(--brick);color:#fff;font-size:10.5px;font-weight:700;padding:3px 7px;border-radius:2px;}
 .pcard .thumb .heart{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.9);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;}
 .pcard .heart.on{color:var(--brick);}
@@ -145,7 +147,8 @@ section.block{padding:52px 0;border-bottom:1px solid var(--line);}
 .resultslist{display:flex;flex-direction:column;gap:12px;}
 .rowcard{display:grid;grid-template-columns:110px 1fr auto;gap:16px;background:#fff;border:1px solid var(--line);padding:14px;align-items:center;cursor:pointer;}
 .rowcard:hover{border-color:var(--ink);}
-.rowcard .rthumb{height:78px;background:linear-gradient(135deg,var(--paper-2),#E7DFCB);display:flex;align-items:center;justify-content:center;font-size:26px;border-radius:2px;}
+.rowcard .rthumb{height:90px;background:linear-gradient(135deg,var(--paper-2),#E7DFCB);display:flex;align-items:center;justify-content:center;font-size:26px;border-radius:2px;overflow:hidden;width:120px;flex-shrink:0;}
+.rowcard .rthumb img{width:100%;height:100%;object-fit:cover;border-radius:2px;}
 .rowcard .rmain h4{font-size:15px;font-weight:700;}
 .rowcard .rmain .raddr{font-size:12px;color:var(--ink-soft);margin-top:2px;}
 .rowcard .rmain .chips{margin-top:8px;}
@@ -156,7 +159,8 @@ section.block{padding:52px 0;border-bottom:1px solid var(--line);}
 /* ---------- DETAIL PAGE ---------- */
 .detailhero{background:#fff;border-bottom:1px solid var(--line);padding:30px 0;}
 .dh-top{display:grid;grid-template-columns:260px 1fr auto;gap:24px;align-items:center;}
-.dh-thumb{height:170px;background:linear-gradient(135deg,var(--paper-2),#E7DFCB);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:52px;}
+.dh-thumb{height:200px;background:linear-gradient(135deg,var(--paper-2),#E7DFCB);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:52px;overflow:hidden;}
+.dh-thumb img{width:100%;height:100%;object-fit:cover;border-radius:4px;}
 .dh-addr{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;}
 .dh-title{font-family:var(--serif);font-size:26px;font-weight:800;margin-top:4px;}
 .dh-meta{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;}
@@ -217,11 +221,16 @@ section.block{padding:52px 0;border-bottom:1px solid var(--line);}
 
 /* ---------- AUCTION ---------- */
 .auctiongrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.acard{background:#fff;border:1px solid var(--line);padding:16px;}
-.acard .ahead{display:flex;justify-content:space-between;align-items:center;}
+.acard{background:#fff;border:1px solid var(--line);padding:0;overflow:hidden;cursor:pointer;transition:.15s;}
+.acard:hover{border-color:var(--ink);box-shadow:0 8px 20px rgba(20,33,61,.08);}
+.acard .athumb{height:140px;overflow:hidden;position:relative;background:var(--paper-2);}
+.acard .athumb img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease;}
+.acard:hover .athumb img{transform:scale(1.04);}
+.acard .abody{padding:14px;}
+.acard .abody .ahead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
 .acard .acase{font-family:var(--mono);font-size:11px;color:var(--ink-soft);}
 .acard .around{background:var(--danger);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:2px;}
-.acard h4{font-size:15px;font-weight:700;margin-top:8px;}
+.acard h4{font-size:14.5px;font-weight:700;margin-bottom:8px;}
 .acard .arow{display:flex;justify-content:space-between;font-size:12.5px;padding:6px 0;border-bottom:1px dashed var(--line);}
 .acard .arow b{font-family:var(--mono);}
 .acard .arow:last-of-type{border-bottom:none;}
@@ -456,35 +465,35 @@ function toast(msg){
 
 /* ============ MOCK DATA ============ */
 var LISTINGS = [
-  { id:'L001', addr:'청주시 흥덕구 오송읍 오송파크뷰 101동', region:'오송', type:'아파트', area:84, floor:12, rooms:3, baths:2, park:true, elev:true, confirmed:'2026-08-14', img:'🏢',
+  { id:'L001', addr:'청주시 흥덕구 오송읍 오송파크뷰 101동', region:'오송', type:'아파트', area:84, floor:12, rooms:3, baths:2, park:true, elev:true, confirmed:'2026-08-14', img:'https://sspark.genspark.ai/cfimages?u1=BU48o3php3AQw61StEnu%2B2p1EmeXpNSCWqYlGUz%2F7ce8k2rYPL6iayreqvBRee9UaFlW4SaYkCVvBjs20Tgo1Mak3K26kcWDYSqc3PWfCc%2BhFp1gRJrECJOVvSFCFmdaZxgQ5joAvCaofOEL1ztUk53C7WfWQhUz&u2=UlF%2BpE6qcfwsxif3&width=800',
     deals:{ sale:{price:48000, count:4, verified:true}, jeonse:{price:32000, count:3, verified:true}, wolse:{deposit:5000, rent:110, mgmt:12, count:7, verified:true}, direct:{dtype:'jeonse', price:31000, verified:true}, auction:null },
     realprice:[{d:'2025-11',p:45800},{d:'2026-02',p:46500},{d:'2026-05',p:47200},{d:'2026-07',p:47800}],
     agent:'청주오송공인중개사', agentType:'공인중개사', region2:'충북 청주시 흥덕구' },
-  { id:'L002', addr:'청주시 청원구 오창읍 테크노폴리스자이 203동', region:'오창', type:'아파트', area:74, floor:8, rooms:3, baths:2, park:true, elev:true, confirmed:'2026-08-10', img:'🏙️',
+  { id:'L002', addr:'청주시 청원구 오창읍 테크노폴리스자이 203동', region:'오창', type:'아파트', area:74, floor:8, rooms:3, baths:2, park:true, elev:true, confirmed:'2026-08-10', img:'https://sspark.genspark.ai/cfimages?u1=4atuAPLrhbv3RPCIoXQTbc9ELS6B8LfchD5RgR53VdiwxV4ecTQPuyVsNgnBF30SkXlyXkGFS6F4%2Ba%2FhOH%2F0SJKMFPHlVdkqmjDTG0kJdSs4od3zfJMtAVa3eUnKzHxlo9hTQpVXHGBnpijHVoRPuWhqOuov991Qz7mXMDUtKRPZGzBK&u2=9nmyiTZQaed9Qt7Y&width=800',
     deals:{ sale:{price:36500, count:6, verified:true}, jeonse:{price:24000, count:5, verified:true}, wolse:{deposit:3000, rent:85, mgmt:9, count:4, verified:true}, direct:null, auction:{caseNo:'2026타경1042', court:'청주지방법원', appraised:35000, minBid:24500, failedCount:1, saleDate:'2026-09-18'} },
     realprice:[{d:'2025-11',p:35200},{d:'2026-02',p:35800},{d:'2026-05',p:36000},{d:'2026-07',p:36300}],
     agent:'오창중앙공인중개사', agentType:'공인중개사', region2:'충북 청주시 청원구' },
-  { id:'L003', addr:'세종시 나성동 리버뷰써밋 1502동', region:'세종', type:'아파트', area:99, floor:15, rooms:4, baths:2, park:true, elev:true, confirmed:'2026-08-15', img:'🌆',
+  { id:'L003', addr:'세종시 나성동 리버뷰써밋 1502동', region:'세종', type:'아파트', area:99, floor:15, rooms:4, baths:2, park:true, elev:true, confirmed:'2026-08-15', img:'https://sspark.genspark.ai/cfimages?u1=ca2tDRndpSC7fUbjbN509NqKcN4%2FoubUXjsLTkRMlVHPidMioHrbijczY0IqeHshY5bJG7jPTLuP43nSfO1CEQINgV1qF0bFRVCqPNwWw7jYfbBcupaCfSENtu6COgkL2PnVL7DJgQL7HDtt30iT1mVVSX1yKBZD9iUkFDX1zVGfUq%2FuItst%2BVGvFe8333oY7PdlrmgvuY43Zw%3D%3D&u2=VBbAfkS3A0FbRS1w&width=800',
     deals:{ sale:{price:68000, count:2, verified:true}, jeonse:{price:41000, count:2, verified:true}, wolse:null, direct:{dtype:'sale', price:66500, verified:true}, auction:null },
     realprice:[{d:'2025-11',p:65000},{d:'2026-02',p:66200},{d:'2026-05',p:67100},{d:'2026-07',p:67900}],
     agent:'세종나성공인중개사', agentType:'공인중개사', region2:'세종특별자치시' },
-  { id:'L004', addr:'청주시 상당구 용암동 용암하이츠 305동', region:'청주 상당', type:'아파트', area:59, floor:5, rooms:2, baths:1, park:false, elev:true, confirmed:'2026-08-01', img:'🏠',
+  { id:'L004', addr:'청주시 상당구 용암동 용암하이츠 305동', region:'청주 상당', type:'아파트', area:59, floor:5, rooms:2, baths:1, park:false, elev:true, confirmed:'2026-08-01', img:'https://sspark.genspark.ai/cfimages?u1=emghfT0sUny5rqDeP5wFeko6ZLS9UDPXPuYT8G229LpOJBSy7pCk7YzHpUpvTJkYcfV50qdRq844y7thRKx8uJ8dsn%2Fry%2BZJrEVTixOjRNEcIEeXAtkIj%2BIYQ7WkkKrik%2FhNizSSv2dW&u2=2DDxAYziDd9vkadH&width=800',
     deals:{ sale:{price:26500, count:3, verified:true}, jeonse:{price:18500, count:2, verified:false}, wolse:{deposit:2000, rent:65, mgmt:8, count:5, verified:true}, direct:null, auction:null },
     realprice:[{d:'2025-11',p:25400},{d:'2026-02',p:25900},{d:'2026-05',p:26100},{d:'2026-07',p:26300}],
     agent:'용암동공인중개사', agentType:'공인중개사', region2:'충북 청주시 상당구' },
-  { id:'L005', addr:'청주시 흥덕구 봉명동 봉명자이 1동', region:'청주 흥덕', type:'오피스텔', area:42, floor:9, rooms:1, baths:1, park:true, elev:true, confirmed:'2026-08-12', img:'🏬',
+  { id:'L005', addr:'청주시 흥덕구 봉명동 봉명자이 1동', region:'청주 흥덕', type:'오피스텔', area:42, floor:9, rooms:1, baths:1, park:true, elev:true, confirmed:'2026-08-12', img:'https://sspark.genspark.ai/cfimages?u1=NqplBcatxoVbaTtTfbc0jviLLAnZSI4O4coqKPuGv58B1CL33yvmx1X00RtxZstjdCJggVG6KkGAi4oGVzQ2GUHXGvk%2B&u2=qgqYe6Cav78Eu0uA&width=800',
     deals:{ sale:{price:16800, count:5, verified:true}, jeonse:null, wolse:{deposit:1000, rent:55, mgmt:7, count:9, verified:true}, direct:{dtype:'wolse', deposit:500, rent:52, verified:true}, auction:null },
     realprice:[{d:'2025-11',p:16200},{d:'2026-02',p:16400},{d:'2026-05',p:16600},{d:'2026-07',p:16750}],
     agent:'봉명동공인중개사', agentType:'공인중개사', region2:'충북 청주시 흥덕구' },
-  { id:'L006', addr:'청주시 흥덕구 오송읍 오송자이르네 402동', region:'오송', type:'아파트', area:112, floor:20, rooms:4, baths:2, park:true, elev:true, confirmed:'2026-08-09', img:'🏢',
+  { id:'L006', addr:'청주시 흥덕구 오송읍 오송자이르네 402동', region:'오송', type:'아파트', area:112, floor:20, rooms:4, baths:2, park:true, elev:true, confirmed:'2026-08-09', img:'https://sspark.genspark.ai/cfimages?u1=U5Ir%2BV8WJ078IYL4H4ZDaMkDzMH5Z5KIAUzfZO81Rn36TdEbs2ym5rc4H%2Fn%2FjhJyrWbUS6QbZdTCFg%2BOIkYP9vtNCvfuXX89cNqMnpLl7fNNtvLn9XXAe7%2FRg7rc0nM9zXo1qk9jiwXiO98dhKJxF5EuhHb2C6BiDz2s0tZK3Wo4XxLKQCA%3D&u2=IV%2FpLKkExg7Y5lz2&width=800',
     deals:{ sale:{price:59000, count:3, verified:true}, jeonse:{price:38500, count:1, verified:true}, wolse:null, direct:null, auction:{caseNo:'2026타경889', court:'청주지방법원', appraised:57000, minBid:39900, failedCount:2, saleDate:'2026-09-02'} },
     realprice:[{d:'2025-11',p:56200},{d:'2026-02',p:57500},{d:'2026-05',p:58200},{d:'2026-07',p:58800}],
     agent:'오송르네상스공인중개사', agentType:'공인중개사', region2:'충북 청주시 흥덕구' },
-  { id:'L007', addr:'천안시 서북구 불당동 불당호반써밋 707동', region:'천안', type:'아파트', area:84, floor:11, rooms:3, baths:2, park:true, elev:true, confirmed:'2026-08-13', img:'🏙️',
+  { id:'L007', addr:'천안시 서북구 불당동 불당호반써밋 707동', region:'천안', type:'아파트', area:84, floor:11, rooms:3, baths:2, park:true, elev:true, confirmed:'2026-08-13', img:'https://sspark.genspark.ai/cfimages?u1=7PuIlbsAu9R91hq0PbdDkZp2AdEHW8OmV9g%2FUKeMcTDvB0b6CmZhFcBTp86ATDWaPOXf6kDhn7FbbvCS8VVHtqpUnKv3aTyta0DIjayVflHWG3aIXKDafvh%2BEvuOLDJxnxAOjGxaPJur1GzpQZoBsc2mqA8Eyf82B6WO0nvKMVLka0xQlOPwXd%2Fx5snUXLyabGDE0QE%3D&u2=zHXJaZ9rOWe5HJA5&width=800',
     deals:{ sale:{price:52000, count:8, verified:true}, jeonse:{price:34000, count:6, verified:true}, wolse:{deposit:4000, rent:100, mgmt:11, count:3, verified:true}, direct:null, auction:null },
     realprice:[{d:'2025-11',p:50100},{d:'2026-02',p:50900},{d:'2026-05',p:51500},{d:'2026-07',p:51900}],
     agent:'불당공인중개사', agentType:'공인중개사', region2:'충남 천안시 서북구' },
-  { id:'L008', addr:'청주시 청원구 내수읍 내수그린빌 5동', region:'청주 청원', type:'빌라', area:64, floor:3, rooms:3, baths:1, park:true, elev:false, confirmed:'2026-07-28', img:'🏘️',
+  { id:'L008', addr:'청주시 청원구 내수읍 내수그린빌 5동', region:'청주 청원', type:'빌라', area:64, floor:3, rooms:3, baths:1, park:true, elev:false, confirmed:'2026-07-28', img:'https://sspark.genspark.ai/cfimages?u1=4PAm1YC0g6ewmEw2hOvjXvbfoR%2BpK%2B33UQLhNdLjWgJ3nt%2BGv06dRYtxp4bqy2PPM%2FjgHF5K%2FMjxFlajE3qtAtHBADVzW36Cgu47gLbLOiUdWUHoPxWm&u2=ijB1VAJ0t5sz4uis&width=800',
     deals:{ sale:{price:15800, count:1, verified:false}, jeonse:{price:11000, count:2, verified:true}, wolse:{deposit:1500, rent:45, mgmt:5, count:3, verified:true}, direct:{dtype:'jeonse', price:10500, verified:true}, auction:null },
     realprice:[{d:'2025-11',p:15200},{d:'2026-02',p:15400},{d:'2026-05',p:15600},{d:'2026-07',p:15700}],
     agent:'내수읍공인중개사', agentType:'공인중개사', region2:'충북 청주시 청원구' }
@@ -604,7 +613,9 @@ function pcardHTML(l){
   var on = favs.indexOf(l.id) >= 0;
   var mp = mainPrice(l);
   var html = '<div class="pcard" data-go="detail" data-id="' + l.id + '">';
-  html += '<div class="thumb">' + (l.deals.auction ? '<span class="badge">경매</span>' : '') + l.img;
+  var isUrl = l.img && l.img.startsWith('http');
+  var thumbContent = isUrl ? '<img src="' + l.img + '" alt="' + esc(l.addr) + '" loading="lazy">' : l.img;
+  html += '<div class="thumb">' + (l.deals.auction ? '<span class="badge">경매</span>' : '') + thumbContent;
   html += '<button class="heart' + (on?' on':'') + '" data-fav="' + l.id + '">' + ic('heart',15) + '</button></div>';
   html += '<div class="body"><div class="price">' + mp.label + ' ' + mp.val + '</div>';
   html += '<div class="addr">' + esc(l.addr) + '</div>';
@@ -615,7 +626,9 @@ function pcardHTML(l){
 function rowcardHTML(l){
   var mp = mainPrice(l);
   var html = '<div class="rowcard" data-go="detail" data-id="' + l.id + '">';
-  html += '<div class="rthumb">' + l.img + '</div>';
+  var isUrlR = l.img && l.img.startsWith('http');
+  var rthumbContent = isUrlR ? '<img src="' + l.img + '" alt="' + esc(l.addr) + '" loading="lazy">' : l.img;
+  html += '<div class="rthumb">' + rthumbContent + '</div>';
   html += '<div class="rmain"><h4>' + esc(l.addr) + '</h4>';
   html += '<div class="raddr">' + l.type + ' · ' + l.area + '㎡ · ' + l.floor + '층 · 방' + l.rooms + '/욕실' + l.baths + ' · 확인일 ' + l.confirmed + '</div>';
   html += '<div class="chips">' + dealChips(l) + '</div></div>';
@@ -781,7 +794,9 @@ function pageDetail(id){
   var isFav = favs.indexOf(id) >= 0;
 
   var html = '<div class="detailhero"><div class="wrap"><div class="dh-top">';
-  html += '<div class="dh-thumb">' + l.img + '</div>';
+  var isUrlD = l.img && l.img.startsWith('http');
+  var dhThumbContent = isUrlD ? '<img src="' + l.img + '" alt="' + esc(l.addr) + '">' : l.img;
+  html += '<div class="dh-thumb">' + dhThumbContent + '</div>';
   html += '<div><div class="dh-addr">' + esc(l.region2) + '</div><div class="dh-title">' + esc(l.addr) + '</div>';
   html += '<div class="dh-meta"><div><b>' + l.type + '</b></div><div>전용 <b>' + l.area + '㎡</b></div><div><b>' + l.floor + '층</b></div><div>방 <b>' + l.rooms + '</b> · 욕실 <b>' + l.baths + '</b></div><div>주차 <b>' + (l.park?'가능':'불가') + '</b></div><div>최종확인 <b>' + l.confirmed + '</b></div></div>';
   html += '<div style="margin-top:12px;font-size:12.5px;color:var(--ink-soft);">담당: ' + esc(l.agent) + ' (' + l.agentType + ')</div></div>';
@@ -928,12 +943,15 @@ function pageAuctionList(){
   html += '<div class="auctiongrid">';
   for(var i=0;i<list.length;i++){
     var l = list[i]; var a = l.deals.auction;
-    html += '<div class="acard" data-go="detail" data-id="' + l.id + '"><div class="ahead"><span class="acase">' + a.caseNo + '</span><span class="around">유찰 ' + a.failedCount + '회</span></div>';
+    var aIsUrl = l.img && l.img.startsWith('http');
+    html += '<div class="acard" data-go="detail" data-id="' + l.id + '">';
+    html += '<div class="athumb">' + (aIsUrl ? '<img src="' + l.img + '" alt="' + esc(l.addr) + '" loading="lazy">' : '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:32px;">' + l.img + '</div>') + '</div>';
+    html += '<div class="abody"><div class="ahead"><span class="acase">' + a.caseNo + '</span><span class="around">유찰 ' + a.failedCount + '회</span></div>';
     html += '<h4>' + esc(l.addr) + '</h4>';
     html += '<div class="arow"><span>법원</span><b>' + a.court + '</b></div>';
     html += '<div class="arow"><span>감정가</span><b>' + money(a.appraised) + '</b></div>';
     html += '<div class="arow"><span>최저매각가격</span><b>' + money(a.minBid) + '</b></div>';
-    html += '<div class="arow"><span>매각기일</span><b>' + a.saleDate + '</b></div></div>';
+    html += '<div class="arow"><span>매각기일</span><b>' + a.saleDate + '</b></div></div></div>';
   }
   html += '</div>';
 
