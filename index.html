@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>터전거래소 — 매매·전세·월세·경매 통합비교</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Pretendard:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14213D;
+  --ink-2:#233255;
+  --paper:#FAF7F1;
+  --paper-2:#F1ECE1;
+  --brick:#B5482F;
+  --brick-2:#8F3620;
+  --gold:#B8923F;
+  --sage:#3F7A5D;
+  --sage-2:#EAF2ED;
+  --line:#E2DCCE;
+  --ink-soft:#5B6472;
+  --white:#FFFFFF;
+  --danger:#B23A3A;
+  --radius:2px;
+  --serif:'Noto Serif KR',serif;
+  --sans:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+input,select,textarea{font-family:inherit;}
+:focus-visible{outline:2px solid var(--brick);outline-offset:2px;}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+.svgicon{display:inline-block;vertical-align:middle;stroke:currentColor;fill:none;stroke-width:1.6;}
+
+/* ---------- HEADER ---------- */
+#topbar{background:var(--ink);color:#DCE0EA;font-size:12px;}
+#topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:30px;}
+#topbar .ticker{font-family:var(--mono);letter-spacing:.02em;color:#B9C2D6;overflow:hidden;white-space:nowrap;}
+#topbar .ticker span{margin-right:22px;}
+header#mainhead{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50;}
+header#mainhead .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;gap:20px;}
+.brand{display:flex;align-items:baseline;gap:6px;font-family:var(--serif);}
+.brand .b1{font-weight:900;font-size:22px;letter-spacing:-.01em;color:var(--ink);}
+.brand .b2{font-size:12px;color:var(--brick);border:1px solid var(--brick);padding:1px 6px;border-radius:2px;font-family:var(--sans);font-weight:600;}
+nav#gnb{display:flex;gap:2px;flex:1;justify-content:center;}
+nav#gnb a{padding:10px 14px;font-size:14.5px;font-weight:500;color:var(--ink-2);border-bottom:2px solid transparent;}
+nav#gnb a.active{color:var(--brick);border-bottom-color:var(--brick);font-weight:700;}
+nav#gnb a:hover{color:var(--brick);}
+.headright{display:flex;align-items:center;gap:10px;}
+.pvchip{font-family:var(--mono);font-size:12px;background:var(--sage-2);color:var(--sage);padding:5px 9px;border-radius:20px;font-weight:700;}
+.btn{border:1px solid var(--ink);background:transparent;color:var(--ink);padding:8px 16px;font-size:13.5px;font-weight:600;border-radius:2px;transition:.15s;}
+.btn:hover{background:var(--ink);color:var(--white);}
+.btn-solid{background:var(--brick);border-color:var(--brick);color:#fff;}
+.btn-solid:hover{background:var(--brick-2);border-color:var(--brick-2);}
+.btn-sm{padding:5px 11px;font-size:12.5px;}
+.btn-ghost{border-color:var(--line);color:var(--ink-soft);}
+.loginwrap{position:relative;}
+.loginpanel{position:absolute;right:0;top:44px;background:#fff;border:1px solid var(--line);box-shadow:0 12px 30px rgba(20,33,61,.14);width:230px;padding:16px;display:none;z-index:60;}
+.loginpanel.open{display:block;}
+.loginpanel .soc{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.soc button{width:100%;text-align:left;padding:9px 12px;border:1px solid var(--line);background:#fff;border-radius:3px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;}
+.soc button:hover{border-color:var(--ink);}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+
+/* ---------- HERO ---------- */
+.hero{background:linear-gradient(180deg,var(--ink) 0%,#1B2C4E 100%);color:#fff;padding:64px 0 40px;position:relative;overflow:hidden;}
+.hero:after{content:'';position:absolute;right:-80px;top:-80px;width:340px;height:340px;border:1px solid rgba(255,255,255,.08);border-radius:50%;}
+.hero .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:16px;}
+.hero h1{font-family:var(--serif);font-size:40px;font-weight:900;line-height:1.32;max-width:720px;letter-spacing:-.01em;}
+.hero h1 em{color:var(--gold);font-style:normal;}
+.hero p.sub{margin-top:14px;color:#C4CBDB;font-size:15.5px;max-width:560px;}
+.searchbox{background:#fff;border-radius:3px;margin-top:30px;padding:8px;display:flex;gap:8px;max-width:760px;box-shadow:0 18px 40px rgba(0,0,0,.25);}
+.searchbox select{border:none;background:var(--paper-2);color:var(--ink);font-size:13.5px;font-weight:600;padding:0 12px;border-radius:2px;}
+.searchbox input{flex:1;border:none;font-size:15px;padding:0 6px;color:var(--ink);}
+.searchbox input::placeholder{color:#9AA1AE;}
+.searchbox button{background:var(--brick);color:#fff;border:none;padding:0 22px;font-weight:700;font-size:14px;border-radius:2px;}
+.quicktags{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;}
+.quicktags a{font-size:12.5px;color:#C4CBDB;border:1px solid rgba(255,255,255,.25);padding:5px 12px;border-radius:20px;}
+.quicktags a:hover{border-color:var(--gold);color:var(--gold);}
+
+/* ---------- SECTION GENERIC ---------- */
+section.block{padding:52px 0;border-bottom:1px solid var(--line);}
+.blockhead{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;}
+.blockhead h2{font-family:var(--serif);font-size:24px;font-weight:700;}
+.blockhead .lbl{font-family:var(--mono);font-size:11px;color:var(--brick);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;display:block;}
+.blockhead a.more{font-size:12.5px;color:var(--ink-soft);border-bottom:1px solid var(--line);}
+
+.typegrid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;}
+.typegrid a{background:#fff;border:1px solid var(--line);padding:18px 10px;text-align:center;border-radius:2px;transition:.15s;}
+.typegrid a:hover{border-color:var(--brick);transform:translateY(-2px);}
+.typegrid .ic{color:var(--brick);margin-bottom:8px;}
+.typegrid .tl{font-size:13px;font-weight:700;}
+
+.cardgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:2px;overflow:hidden;transition:.15s;cursor:pointer;}
+.pcard:hover{border-color:var(--ink);box-shadow:0 10px 24px rgba(20,33,61,.08);}
+.pcard .thumb{height:120px;background:linear-gradient(135deg,var(--paper-2),#E7DFCB);display:flex;align-items:center;justify-content:center;font-size:34px;position:relative;}
+.pcard .thumb .badge{position:absolute;top:8px;left:8px;background:var(--brick);color:#fff;font-size:10.5px;font-weight:700;padding:3px 7px;border-radius:2px;}
+.pcard .thumb .heart{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.9);width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;}
+.pcard .heart.on{color:var(--brick);}
+.pcard .body{padding:12px 14px;}
+.pcard .price{font-family:var(--mono);font-weight:700;font-size:16px;color:var(--ink);}
+.pcard .addr{font-size:12.5px;color:var(--ink-soft);margin-top:3px;}
+.pcard .meta{font-size:11.5px;color:#8A93A3;margin-top:6px;}
+.pcard .chips{display:flex;gap:5px;margin-top:9px;flex-wrap:wrap;}
+.chip{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:2px;background:var(--paper-2);color:var(--ink-soft);}
+.chip.sale{background:#EFE6DE;color:var(--brick-2);}
+.chip.jeonse{background:var(--sage-2);color:var(--sage);}
+.chip.wolse{background:#EFEAF6;color:#5B4A9A;}
+.chip.direct{background:#FFF2D8;color:#8A6A16;}
+.chip.auction{background:#FBE7E4;color:var(--danger);}
+
+.financestrip{display:flex;gap:14px;background:#fff;border:1px solid var(--line);padding:18px;border-radius:2px;flex-wrap:wrap;align-items:center;}
+.financestrip .fitem{flex:1;min-width:180px;display:flex;gap:10px;align-items:center;}
+.financestrip .ficon{width:36px;height:36px;border-radius:50%;background:var(--sage-2);color:var(--sage);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.financestrip .ft{font-size:13px;font-weight:700;}
+.financestrip .fs{font-size:11.5px;color:var(--ink-soft);}
+
+.newsgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.newscard{background:#fff;border:1px solid var(--line);padding:16px;}
+.newscard .tag{font-family:var(--mono);font-size:10.5px;color:var(--brick);letter-spacing:.08em;}
+.newscard h4{font-family:var(--serif);font-size:15px;margin-top:8px;line-height:1.4;}
+.newscard p{font-size:12px;color:var(--ink-soft);margin-top:8px;}
+
+/* ---------- SEARCH PAGE ---------- */
+.searchlayout{display:grid;grid-template-columns:260px 1fr;gap:24px;padding:28px 0 60px;}
+.filterpanel{background:#fff;border:1px solid var(--line);padding:18px;align-self:start;position:sticky;top:82px;}
+.filterpanel h3{font-size:13px;font-weight:800;margin-bottom:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);}
+.dealtabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+.dealtabs button{flex:1;min-width:60px;padding:8px 4px;font-size:12.5px;font-weight:700;border:1px solid var(--line);background:var(--paper);border-radius:2px;}
+.dealtabs button.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.fgroup{margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed var(--line);}
+.fgroup label{display:block;font-size:12px;font-weight:700;color:var(--ink-2);margin-bottom:7px;}
+.fgroup .rangerow{display:flex;gap:6px;align-items:center;}
+.fgroup input[type=number]{width:100%;border:1px solid var(--line);padding:6px 8px;font-size:12.5px;border-radius:2px;}
+.fgroup select{width:100%;border:1px solid var(--line);padding:7px 8px;font-size:12.5px;border-radius:2px;}
+.checkrow{display:flex;align-items:center;gap:7px;font-size:12.5px;margin-top:8px;color:var(--ink-2);}
+.resultshead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.resultshead .cnt{font-size:14px;font-weight:700;}
+.resultshead .cnt span{color:var(--brick);font-family:var(--mono);}
+.resultslist{display:flex;flex-direction:column;gap:12px;}
+.rowcard{display:grid;grid-template-columns:110px 1fr auto;gap:16px;background:#fff;border:1px solid var(--line);padding:14px;align-items:center;cursor:pointer;}
+.rowcard:hover{border-color:var(--ink);}
+.rowcard .rthumb{height:78px;background:linear-gradient(135deg,var(--paper-2),#E7DFCB);display:flex;align-items:center;justify-content:center;font-size:26px;border-radius:2px;}
+.rowcard .rmain h4{font-size:15px;font-weight:700;}
+.rowcard .rmain .raddr{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+.rowcard .rmain .chips{margin-top:8px;}
+.rowcard .rprice{text-align:right;font-family:var(--mono);}
+.rowcard .rprice .p1{font-size:17px;font-weight:800;}
+.rowcard .rprice .p2{font-size:11px;color:var(--ink-soft);margin-top:2px;}
+
+/* ---------- DETAIL PAGE ---------- */
+.detailhero{background:#fff;border-bottom:1px solid var(--line);padding:30px 0;}
+.dh-top{display:grid;grid-template-columns:260px 1fr auto;gap:24px;align-items:center;}
+.dh-thumb{height:170px;background:linear-gradient(135deg,var(--paper-2),#E7DFCB);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:52px;}
+.dh-addr{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.03em;}
+.dh-title{font-family:var(--serif);font-size:26px;font-weight:800;margin-top:4px;}
+.dh-meta{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;}
+.dh-meta div{font-size:12.5px;color:var(--ink-soft);}
+.dh-meta b{color:var(--ink);}
+.dh-actions{display:flex;flex-direction:column;gap:8px;min-width:150px;}
+
+.board{background:var(--ink);color:#fff;padding:0;overflow-x:auto;}
+.board table{width:100%;border-collapse:collapse;font-family:var(--mono);min-width:720px;}
+.board th{text-align:left;font-size:10.5px;letter-spacing:.1em;color:#8FA0C4;font-weight:600;padding:14px 18px 8px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.12);}
+.board td{padding:14px 18px;font-size:13.5px;border-bottom:1px solid rgba(255,255,255,.07);}
+.board tr:last-child td{border-bottom:none;}
+.board .dealname{font-family:var(--sans);font-weight:700;display:flex;align-items:center;gap:8px;}
+.board .swatch{width:8px;height:8px;border-radius:50%;}
+.board .amt{font-weight:700;font-size:15.5px;}
+.board .diffup{color:#E8A56A;}
+.board .diffdn{color:#77C9A0;}
+.board .vbadge{font-size:10px;font-family:var(--sans);font-weight:700;padding:2px 6px;border-radius:2px;background:rgba(255,255,255,.1);}
+.board .vbadge.ok{background:rgba(63,122,93,.4);color:#9BE0BB;}
+
+.detailbody{display:grid;grid-template-columns:1fr 320px;gap:28px;padding:36px 0 60px;}
+.dsection{background:#fff;border:1px solid var(--line);padding:22px;margin-bottom:20px;}
+.dsection h3{font-family:var(--serif);font-size:17px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.dsection h3 .num{font-family:var(--mono);font-size:11px;color:var(--brick);}
+.barchart{display:flex;align-items:flex-end;gap:12px;height:120px;margin-top:10px;}
+.barchart .bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.barchart .bar{width:100%;background:var(--paper-2);border-radius:2px 2px 0 0;position:relative;}
+.barchart .bar.hi{background:var(--brick);}
+.barchart .blabel{font-size:10.5px;color:var(--ink-soft);font-family:var(--mono);}
+.barchart .bval{font-size:11px;font-weight:700;font-family:var(--mono);}
+.rangebar{height:8px;background:var(--paper-2);border-radius:20px;margin:14px 0 6px;position:relative;}
+.rangebar .fill{position:absolute;height:100%;background:var(--sage);border-radius:20px;}
+.rangebar .marker{position:absolute;top:-5px;width:2px;height:18px;background:var(--brick);}
+.rangelabels{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-soft);font-family:var(--mono);}
+
+.safetygrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.sitem{display:flex;gap:9px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:2px;}
+.sitem .sic{color:var(--sage);flex-shrink:0;margin-top:1px;}
+.sitem.warn .sic{color:var(--gold);}
+.sitem .st{font-size:12.5px;font-weight:700;}
+.sitem .sd{font-size:11px;color:var(--ink-soft);margin-top:2px;}
+
+.calcrow{display:flex;gap:10px;margin-bottom:10px;}
+.calcrow input,.calcrow select{flex:1;border:1px solid var(--line);padding:9px 10px;font-size:13px;border-radius:2px;}
+.calcresult{background:var(--paper-2);padding:14px;border-radius:2px;margin-top:10px;}
+.calcresult .cr-row{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;}
+.calcresult .cr-row.total{border-top:1px solid var(--line);margin-top:6px;padding-top:10px;font-weight:800;font-family:var(--mono);}
+
+.sidebar .side-box{background:#fff;border:1px solid var(--line);padding:18px;margin-bottom:16px;}
+.sidebar .side-box h4{font-size:13px;font-weight:800;margin-bottom:10px;}
+.agentcard{display:flex;gap:10px;align-items:center;}
+.agentcard .av{width:44px;height:44px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--serif);}
+.agentcard .an{font-size:13.5px;font-weight:700;}
+.agentcard .ao{font-size:11.5px;color:var(--ink-soft);}
+.stackbtn{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.locrow{display:flex;justify-content:space-between;font-size:12.5px;padding:7px 0;border-bottom:1px dashed var(--line);}
+.locrow:last-child{border-bottom:none;}
+
+/* ---------- AUCTION ---------- */
+.auctiongrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.acard{background:#fff;border:1px solid var(--line);padding:16px;}
+.acard .ahead{display:flex;justify-content:space-between;align-items:center;}
+.acard .acase{font-family:var(--mono);font-size:11px;color:var(--ink-soft);}
+.acard .around{background:var(--danger);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:2px;}
+.acard h4{font-size:15px;font-weight:700;margin-top:8px;}
+.acard .arow{display:flex;justify-content:space-between;font-size:12.5px;padding:6px 0;border-bottom:1px dashed var(--line);}
+.acard .arow b{font-family:var(--mono);}
+.acard .arow:last-of-type{border-bottom:none;}
+
+/* ---------- PRICE ---------- */
+.pricetable{width:100%;border-collapse:collapse;background:#fff;}
+.pricetable th{text-align:left;font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;border-bottom:2px solid var(--ink);}
+.pricetable td{padding:11px 14px;font-size:13px;border-bottom:1px solid var(--line);font-family:var(--mono);}
+.pricetable tr:hover td{background:var(--paper-2);}
+
+/* ---------- FINANCE ---------- */
+.fininstgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.fcard{background:#fff;border:1px solid var(--line);padding:18px;display:flex;gap:14px;}
+.fcard .flogo{width:52px;height:52px;background:var(--paper-2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:var(--serif);flex-shrink:0;color:var(--ink-2);}
+.fcard .ftitle{display:flex;justify-content:space-between;align-items:flex-start;}
+.fcard .fname{font-weight:700;font-size:14.5px;}
+.fcard .fdist{font-size:11px;color:var(--ink-soft);}
+.fcard .adtag{font-size:9.5px;background:var(--paper-2);color:var(--ink-soft);padding:2px 6px;border-radius:2px;}
+.fcard .fprod{font-size:11.5px;color:var(--ink-soft);margin:6px 0 8px;}
+.fcard .frate{font-family:var(--mono);font-weight:700;color:var(--brick);font-size:14px;}
+
+/* ---------- FORM (register) ---------- */
+.form-two{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.fld{margin-bottom:14px;}
+.fld label{display:block;font-size:12.5px;font-weight:700;margin-bottom:6px;color:var(--ink-2);}
+.fld input,.fld select,.fld textarea{width:100%;border:1px solid var(--line);padding:10px 12px;font-size:13.5px;border-radius:2px;background:#fff;}
+.fld textarea{min-height:80px;resize:vertical;}
+.dealcheckgrid{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+.dealcheckgrid label{display:flex;align-items:center;gap:6px;border:1px solid var(--line);padding:8px 14px;font-size:12.5px;font-weight:700;border-radius:20px;cursor:pointer;}
+.dealcheckgrid input{accent-color:var(--brick);}
+.dealconditions{display:none;background:var(--paper-2);padding:14px;margin-bottom:14px;border-radius:2px;}
+.dealconditions.show{display:block;}
+.dealconditions h5{font-size:12px;font-weight:800;margin-bottom:10px;color:var(--brick);}
+
+/* ---------- MYPAGE / AGENT tabs ---------- */
+.tabbar{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:24px;flex-wrap:wrap;}
+.tabbar button{padding:12px 18px;font-size:13.5px;font-weight:600;border:none;background:transparent;border-bottom:2px solid transparent;color:var(--ink-soft);}
+.tabbar button.active{color:var(--brick);border-color:var(--brick);font-weight:800;}
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.statcard{background:#fff;border:1px solid var(--line);padding:16px;}
+.statcard .sv{font-family:var(--mono);font-size:24px;font-weight:800;}
+.statcard .sl{font-size:11.5px;color:var(--ink-soft);margin-top:4px;}
+.plangrid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+.plancard{background:#fff;border:1px solid var(--line);padding:18px 14px;text-align:center;position:relative;}
+.plancard.current{border:2px solid var(--brick);}
+.plancard .ptop{font-size:9px;font-weight:800;color:var(--brick);letter-spacing:.08em;position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:#fff;padding:1px 8px;}
+.plancard .pname{font-weight:800;font-size:14px;margin-top:10px;}
+.plancard .pcnt{font-family:var(--mono);font-size:22px;font-weight:800;color:var(--ink);margin:8px 0;}
+.plancard .pprice{font-size:12px;color:var(--ink-soft);}
+.mgmttable{width:100%;border-collapse:collapse;background:#fff;}
+.mgmttable th{text-align:left;padding:10px 12px;font-size:11px;color:var(--ink-soft);border-bottom:2px solid var(--ink);text-transform:uppercase;}
+.mgmttable td{padding:10px 12px;font-size:12.5px;border-bottom:1px solid var(--line);}
+.statuspill{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:20px;}
+.statuspill.live{background:var(--sage-2);color:var(--sage);}
+.statuspill.pend{background:#FFF2D8;color:#8A6A16;}
+.statuspill.done{background:var(--paper-2);color:var(--ink-soft);}
+
+.togglerow{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed var(--line);}
+.togglerow .tl{font-size:13px;font-weight:600;}
+.toggle{width:38px;height:22px;background:var(--line);border-radius:20px;position:relative;border:none;flex-shrink:0;}
+.toggle.on{background:var(--sage);}
+.toggle .kn{width:16px;height:16px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:.15s;}
+.toggle.on .kn{left:19px;}
+
+.empty{text-align:center;padding:60px 20px;color:var(--ink-soft);}
+.empty .svgicon{margin-bottom:12px;}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:13px 22px;border-radius:3px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:200;box-shadow:0 12px 30px rgba(0,0,0,.3);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--ink);color:#AEB6C7;padding:44px 0 26px;margin-top:0;}
+.footgrid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:30px;margin-bottom:30px;}
+.footgrid h5{color:#fff;font-size:12.5px;font-weight:700;margin-bottom:12px;letter-spacing:.04em;}
+.footgrid a{display:block;font-size:12.5px;color:#8D96AA;padding:4px 0;}
+.footgrid a:hover{color:var(--gold);}
+.footbottom{border-top:1px solid rgba(255,255,255,.1);padding-top:20px;font-size:11.5px;color:#6E7690;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+@media(max-width:900px){
+  .typegrid{grid-template-columns:repeat(3,1fr);}
+  .cardgrid{grid-template-columns:repeat(2,1fr);}
+  .newsgrid{grid-template-columns:repeat(2,1fr);}
+  .searchlayout{grid-template-columns:1fr;}
+  .filterpanel{position:static;}
+  .detailbody{grid-template-columns:1fr;}
+  .dh-top{grid-template-columns:1fr;}
+  .auctiongrid{grid-template-columns:repeat(2,1fr);}
+  .fininstgrid{grid-template-columns:1fr;}
+  .form-two{grid-template-columns:1fr;}
+  .plangrid{grid-template-columns:repeat(2,1fr);}
+  .statgrid{grid-template-columns:repeat(2,1fr);}
+  nav#gnb{display:none;}
+  .footgrid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div class="wrap">
+    <div class="ticker" id="tickerbar"></div>
+  </div>
+</div>
+<header id="mainhead">
+  <div class="wrap">
+    <a href="#/home" class="brand"><span class="b1">터전</span><span class="b2">거래소</span></a>
+    <nav id="gnb">
+      <a href="#/home" data-r="home">홈</a>
+      <a href="#/search" data-r="search">매물찾기</a>
+      <a href="#/price" data-r="price">실거래가</a>
+      <a href="#/auction" data-r="auction">법원경매</a>
+      <a href="#/finance" data-r="finance">금융비교</a>
+      <a href="#/register" data-r="register">매물등록</a>
+      <a href="#/agent" data-r="agent">중개사센터</a>
+    </nav>
+    <div class="headright">
+      <span id="pvchip" class="pvchip" style="display:none"></span>
+      <a href="#/mypage" class="btn btn-sm btn-ghost" id="mypagebtn" style="display:none">마이페이지</a>
+      <div class="loginwrap">
+        <button class="btn btn-sm" id="loginbtn">로그인</button>
+        <div class="loginpanel" id="loginpanel">
+          <div style="font-size:12.5px;font-weight:700;">간편 로그인 (데모)</div>
+          <div class="soc">
+            <button data-soc="kakao"><span class="dot" style="background:#FEE500"></span> 카카오로 시작하기</button>
+            <button data-soc="naver"><span class="dot" style="background:#03C75A"></span> 네이버로 시작하기</button>
+            <button data-soc="google"><span class="dot" style="background:#4285F4"></span> Google로 시작하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div id="app"></div>
+<footer>
+  <div class="wrap">
+    <div class="footgrid">
+      <div>
+        <div class="brand" style="margin-bottom:10px;"><span class="b1" style="color:#fff">터전</span><span class="b2">거래소</span></div>
+        <div style="font-size:12.5px;color:#8D96AA;max-width:280px;">매매·전세·월세·직거래·법원경매를 주소 하나로 통합 비교하는 부동산 의사결정 플랫폼입니다. 국토교통부 실거래가 공공데이터 및 지역 금융기관과 연계 운영됩니다.</div>
+      </div>
+      <div>
+        <h5>서비스</h5>
+        <a href="#/search">매물찾기</a>
+        <a href="#/auction">법원경매</a>
+        <a href="#/price">실거래가 분석</a>
+        <a href="#/finance">금융비교</a>
+      </div>
+      <div>
+        <h5>회원</h5>
+        <a href="#/register">매물 등록</a>
+        <a href="#/agent">공인중개사 센터</a>
+        <a href="#/mypage">마이페이지</a>
+        <a href="#/">허위매물 신고</a>
+      </div>
+      <div>
+        <h5>Atomia 생태계</h5>
+        <a href="#/">한국정책경제뉴스 KJKN</a>
+        <a href="#/">티카페알케미</a>
+        <a href="#/">렌트모아</a>
+        <a href="#/">폰딜</a>
+      </div>
+    </div>
+    <div class="footbottom">
+      <span>주식회사 아토미아(Atomia Co., Ltd.) · 청주시 · 사업자등록 110-06-09372</span>
+      <span>본 서비스는 기획 데모이며 실제 대출·중개·경매 절차는 관계기관 공식 안내를 따릅니다.</span>
+    </div>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ 유틸 ============ */
+var MEM = {};
+var STORE = {
+  get: function(k, def){
+    try{
+      var v = localStorage.getItem('teojeon_' + k);
+      return v ? JSON.parse(v) : def;
+    }catch(e){ return (k in MEM) ? MEM[k] : def; }
+  },
+  set: function(k, val){
+    try{ localStorage.setItem('teojeon_' + k, JSON.stringify(val)); }
+    catch(e){ MEM[k] = val; }
+  }
+};
+
+function ic(name, size){
+  var s = size || 18;
+  var paths = {
+    search:'<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/>',
+    map:'<path d="M9 20l-6-3V4l6 3 6-3 6 3v13l-6-3-6 3-6-3z"/><line x1="9" y1="7" x2="9" y2="20"/><line x1="15" y1="4" x2="15" y2="17"/>',
+    home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
+    building:'<rect x="4" y="3" width="16" height="18" rx="1"/><line x1="8" y1="7" x2="8" y2="7.01"/><line x1="12" y1="7" x2="12" y2="7.01"/><line x1="16" y1="7" y2="7.01" x2="16"/><line x1="8" y1="11" x2="8" y2="11.01"/><line x1="12" y1="11" x2="12" y2="11.01"/><line x1="16" y1="11" x2="16" y2="11.01"/><path d="M9 21v-4h6v4"/>',
+    gavel:'<path d="M14 6l4 4"/><path d="M4 20l6-6"/><path d="M8.5 11.5l4-4 4 4-4 4z"/><line x1="17" y1="15" x2="21" y2="19"/>',
+    chart:'<line x1="4" y1="20" x2="4" y2="10"/><line x1="10" y1="20" x2="10" y2="4"/><line x1="16" y1="20" x2="16" y2="13"/><line x1="21" y1="20" x2="3" y2="20"/>',
+    bank:'<line x1="3" y1="21" x2="21" y2="21"/><line x1="5" y1="21" x2="5" y2="10"/><line x1="19" y1="21" x2="19" y2="10"/><path d="M3 10l9-6 9 6"/><line x1="9" y1="21" x2="9" y2="10"/><line x1="15" y1="21" x2="15" y2="10"/>',
+    heart:'<path d="M12 20s-7-4.35-9.5-8.6C.7 8 2 4.5 5.5 4c2-.3 3.7.9 4.5 2.3.8-1.4 2.5-2.6 4.5-2.3 3.5.5 4.8 4 3 7.4C19 15.65 12 20 12 20z"/>',
+    check:'<polyline points="20 6 9 17 4 12"/>',
+    filter:'<polygon points="3 4 21 4 14 13 14 20 10 20 10 13 3 4"/>',
+    calc:'<rect x="5" y="2" width="14" height="20" rx="1"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8" y2="12.01"/><line x1="12" y1="12" x2="12" y2="12.01"/><line x1="16" y1="12" x2="16" y2="12.01"/><line x1="8" y1="16" x2="8" y2="16.01"/><line x1="12" y1="16" x2="12" y2="16.01"/><line x1="16" y1="16" x2="16" y2="16.01"/>',
+    shield:'<path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/>',
+    doc:'<path d="M6 2h9l5 5v15H6z"/><polyline points="15 2 15 7 20 7"/>',
+    phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+    chat:'<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-1L3 20l1.1-4A8.5 8.5 0 1 1 21 11.5z"/>',
+    arrow:'<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
+    star:'<polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18 5.5 22 7 14.5 2 9.5 9 9 12 2"/>',
+    close:'<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+    pin:'<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/>',
+    bell:'<path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+    school:'<path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/>',
+    car:'<path d="M3 13l1.5-5A2 2 0 0 1 6.4 6.5h11.2A2 2 0 0 1 19.5 8L21 13"/><rect x="2" y="13" width="20" height="6" rx="1.5"/><circle cx="6.5" cy="19" r="1.5"/><circle cx="17.5" cy="19" r="1.5"/>'
+  };
+  return '<svg class="svgicon" width="' + s + '" height="' + s + '" viewBox="0 0 24 24">' + (paths[name] || paths.home) + '</svg>';
+}
+
+function money(man){
+  if(man == null) return '-';
+  var eok = Math.floor(man / 10000);
+  var rem = man % 10000;
+  if(eok > 0 && rem > 0) return eok + '억 ' + numfmt(rem) + '만';
+  if(eok > 0) return eok + '억';
+  return numfmt(man) + '만';
+}
+function numfmt(n){ return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastT);
+  window._toastT = setTimeout(function(){ t.classList.remove('show'); }, 2400);
+}
+
+/* ============ MOCK DATA ============ */
+var LISTINGS = [
+  { id:'L001', addr:'청주시 흥덕구 오송읍 오송파크뷰 101동', region:'오송', type:'아파트', area:84, floor:12, rooms:3, baths:2, park:true, elev:true, confirmed:'2026-08-14', img:'🏢',
+    deals:{ sale:{price:48000, count:4, verified:true}, jeonse:{price:32000, count:3, verified:true}, wolse:{deposit:5000, rent:110, mgmt:12, count:7, verified:true}, direct:{dtype:'jeonse', price:31000, verified:true}, auction:null },
+    realprice:[{d:'2025-11',p:45800},{d:'2026-02',p:46500},{d:'2026-05',p:47200},{d:'2026-07',p:47800}],
+    agent:'청주오송공인중개사', agentType:'공인중개사', region2:'충북 청주시 흥덕구' },
+  { id:'L002', addr:'청주시 청원구 오창읍 테크노폴리스자이 203동', region:'오창', type:'아파트', area:74, floor:8, rooms:3, baths:2, park:true, elev:true, confirmed:'2026-08-10', img:'🏙️',
+    deals:{ sale:{price:36500, count:6, verified:true}, jeonse:{price:24000, count:5, verified:true}, wolse:{deposit:3000, rent:85, mgmt:9, count:4, verified:true}, direct:null, auction:{caseNo:'2026타경1042', court:'청주지방법원', appraised:35000, minBid:24500, failedCount:1, saleDate:'2026-09-18'} },
+    realprice:[{d:'2025-11',p:35200},{d:'2026-02',p:35800},{d:'2026-05',p:36000},{d:'2026-07',p:36300}],
+    agent:'오창중앙공인중개사', agentType:'공인중개사', region2:'충북 청주시 청원구' },
+  { id:'L003', addr:'세종시 나성동 리버뷰써밋 1502동', region:'세종', type:'아파트', area:99, floor:15, rooms:4, baths:2, park:true, elev:true, confirmed:'2026-08-15', img:'🌆',
+    deals:{ sale:{price:68000, count:2, verified:true}, jeonse:{price:41000, count:2, verified:true}, wolse:null, direct:{dtype:'sale', price:66500, verified:true}, auction:null },
+    realprice:[{d:'2025-11',p:65000},{d:'2026-02',p:66200},{d:'2026-05',p:67100},{d:'2026-07',p:67900}],
+    agent:'세종나성공인중개사', agentType:'공인중개사', region2:'세종특별자치시' },
+  { id:'L004', addr:'청주시 상당구 용암동 용암하이츠 305동', region:'청주 상당', type:'아파트', area:59, floor:5, rooms:2, baths:1, park:false, elev:true, confirmed:'2026-08-01', img:'🏠',
+    deals:{ sale:{price:26500, count:3, verified:true}, jeonse:{price:18500, count:2, verified:false}, wolse:{deposit:2000, rent:65, mgmt:8, count:5, verified:true}, direct:null, auction:null },
+    realprice:[{d:'2025-11',p:25400},{d:'2026-02',p:25900},{d:'2026-05',p:26100},{d:'2026-07',p:26300}],
+    agent:'용암동공인중개사', agentType:'공인중개사', region2:'충북 청주시 상당구' },
+  { id:'L005', addr:'청주시 흥덕구 봉명동 봉명자이 1동', region:'청주 흥덕', type:'오피스텔', area:42, floor:9, rooms:1, baths:1, park:true, elev:true, confirmed:'2026-08-12', img:'🏬',
+    deals:{ sale:{price:16800, count:5, verified:true}, jeonse:null, wolse:{deposit:1000, rent:55, mgmt:7, count:9, verified:true}, direct:{dtype:'wolse', deposit:500, rent:52, verified:true}, auction:null },
+    realprice:[{d:'2025-11',p:16200},{d:'2026-02',p:16400},{d:'2026-05',p:16600},{d:'2026-07',p:16750}],
+    agent:'봉명동공인중개사', agentType:'공인중개사', region2:'충북 청주시 흥덕구' },
+  { id:'L006', addr:'청주시 흥덕구 오송읍 오송자이르네 402동', region:'오송', type:'아파트', area:112, floor:20, rooms:4, baths:2, park:true, elev:true, confirmed:'2026-08-09', img:'🏢',
+    deals:{ sale:{price:59000, count:3, verified:true}, jeonse:{price:38500, count:1, verified:true}, wolse:null, direct:null, auction:{caseNo:'2026타경889', court:'청주지방법원', appraised:57000, minBid:39900, failedCount:2, saleDate:'2026-09-02'} },
+    realprice:[{d:'2025-11',p:56200},{d:'2026-02',p:57500},{d:'2026-05',p:58200},{d:'2026-07',p:58800}],
+    agent:'오송르네상스공인중개사', agentType:'공인중개사', region2:'충북 청주시 흥덕구' },
+  { id:'L007', addr:'천안시 서북구 불당동 불당호반써밋 707동', region:'천안', type:'아파트', area:84, floor:11, rooms:3, baths:2, park:true, elev:true, confirmed:'2026-08-13', img:'🏙️',
+    deals:{ sale:{price:52000, count:8, verified:true}, jeonse:{price:34000, count:6, verified:true}, wolse:{deposit:4000, rent:100, mgmt:11, count:3, verified:true}, direct:null, auction:null },
+    realprice:[{d:'2025-11',p:50100},{d:'2026-02',p:50900},{d:'2026-05',p:51500},{d:'2026-07',p:51900}],
+    agent:'불당공인중개사', agentType:'공인중개사', region2:'충남 천안시 서북구' },
+  { id:'L008', addr:'청주시 청원구 내수읍 내수그린빌 5동', region:'청주 청원', type:'빌라', area:64, floor:3, rooms:3, baths:1, park:true, elev:false, confirmed:'2026-07-28', img:'🏘️',
+    deals:{ sale:{price:15800, count:1, verified:false}, jeonse:{price:11000, count:2, verified:true}, wolse:{deposit:1500, rent:45, mgmt:5, count:3, verified:true}, direct:{dtype:'jeonse', price:10500, verified:true}, auction:null },
+    realprice:[{d:'2025-11',p:15200},{d:'2026-02',p:15400},{d:'2026-05',p:15600},{d:'2026-07',p:15700}],
+    agent:'내수읍공인중개사', agentType:'공인중개사', region2:'충북 청주시 청원구' }
+];
+
+var FINANCE = [
+  { name:'청주오송지점 새마을금고', dist:'0.4km', region:'오송', products:['주택담보대출','전세자금대출'], rate:'3.8~4.6%', ad:true },
+  { name:'충북은행 오창지점', dist:'1.1km', region:'오창', products:['주택담보대출','경락잔금대출'], rate:'3.9~4.8%', ad:false },
+  { name:'농협은행 세종나성지점', dist:'0.7km', region:'세종', products:['전세자금대출','생애최초대출'], rate:'3.6~4.3%', ad:true },
+  { name:'청주상당신협', dist:'1.6km', region:'청주 상당', products:['월세보증금대출','청년전세대출'], rate:'4.0~5.0%', ad:false },
+  { name:'하나은행 청주흥덕지점', dist:'0.9km', region:'청주 흥덕', products:['주택담보대출','전세보증금반환보증'], rate:'3.7~4.5%', ad:true },
+  { name:'천안불당새마을금고', dist:'0.5km', region:'천안', products:['주택담보대출','경락잔금대출'], rate:'3.9~4.7%', ad:false }
+];
+
+var NEWS = [
+  { tag:'이번 주 급매', title:'오송파크뷰 3.2억 전세, 시세 대비 1000만원 저가', desc:'실거래가 대비 낮은 급매물이 등록되었습니다.' },
+  { tag:'지역 동향', title:'오창 테크노폴리스 일대 매매 거래량 3개월 연속 증가', desc:'산업단지 입주 확대로 수요가 늘고 있습니다.' },
+  { tag:'개발계획', title:'세종 나성동 2단계 생활권 개발계획 발표', desc:'상업·교통 인프라 확충이 예정되어 있습니다.' },
+  { tag:'경매 신건', title:'청주지방법원 오창·오송 아파트 신건 5건 접수', desc:'이번 달 신규 경매 물건을 확인해보세요.' }
+];
+
+/* ============ 상태 ============ */
+function getUser(){ return STORE.get('user', null); }
+function setUser(u){ STORE.set('user', u); renderHeader(); }
+function getFavs(){ return STORE.get('favs', []); }
+function toggleFav(id){
+  var favs = getFavs();
+  var i = favs.indexOf(id);
+  if(i >= 0){ favs.splice(i,1); toast('관심매물에서 제외했습니다'); }
+  else { favs.push(id); toast('관심매물에 저장했습니다'); }
+  STORE.set('favs', favs);
+  return favs.indexOf(id) >= 0;
+}
+function pushRecent(id){
+  var r = STORE.get('recent', []);
+  r = r.filter(function(x){ return x !== id; });
+  r.unshift(id);
+  STORE.set('recent', r.slice(0,12));
+}
+function getConsults(){ return STORE.get('consults', []); }
+function addConsult(c){ var arr = getConsults(); arr.unshift(c); STORE.set('consults', arr); }
+function getMyListings(){ return STORE.get('mylistings', []); }
+
+/* ============ HEADER ============ */
+function renderHeader(){
+  var u = getUser();
+  var loginbtn = document.getElementById('loginbtn');
+  var mypagebtn = document.getElementById('mypagebtn');
+  var pvchip = document.getElementById('pvchip');
+  if(u){
+    loginbtn.textContent = u.name + '님';
+    mypagebtn.style.display = 'inline-block';
+    pvchip.style.display = 'inline-block';
+    pvchip.textContent = numfmt(u.pv) + ' PV';
+  } else {
+    loginbtn.textContent = '로그인';
+    mypagebtn.style.display = 'none';
+    pvchip.style.display = 'none';
+  }
+  var links = document.querySelectorAll('#gnb a');
+  var hash = location.hash.replace('#/','').split('/')[0] || 'home';
+  for(var i=0;i<links.length;i++){
+    links[i].classList.toggle('active', links[i].getAttribute('data-r') === hash);
+  }
+}
+document.getElementById('loginbtn').addEventListener('click', function(e){
+  e.stopPropagation();
+  if(getUser()){ location.hash = '#/mypage'; return; }
+  document.getElementById('loginpanel').classList.toggle('open');
+});
+document.addEventListener('click', function(e){
+  var panel = document.getElementById('loginpanel');
+  if(panel.classList.contains('open') && !panel.contains(e.target) && e.target.id !== 'loginbtn'){
+    panel.classList.remove('open');
+  }
+});
+var socNames = { kakao:'카카오', naver:'네이버', google:'Google' };
+Array.prototype.forEach.call(document.querySelectorAll('.soc button'), function(b){
+  b.addEventListener('click', function(){
+    var soc = b.getAttribute('data-soc');
+    setUser({ name:'박동규', pv:12400, via:socNames[soc] });
+    document.getElementById('loginpanel').classList.remove('open');
+    toast(socNames[soc] + ' 계정으로 로그인되었습니다 (데모)');
+  });
+});
+
+/* ticker */
+(function(){
+  var el = document.getElementById('tickerbar');
+  var arr = LISTINGS.map(function(l){
+    var s = l.deals.sale ? '매매 ' + money(l.deals.sale.price) : (l.deals.jeonse ? '전세 ' + money(l.deals.jeonse.price) : '');
+    return l.region + ' ' + l.type + ' ' + s;
+  });
+  var html = '';
+  for(var i=0;i<arr.length;i++){ html += '<span>' + esc(arr[i]) + '</span>'; }
+  el.innerHTML = html + html;
+})();
+
+/* ============ 매물 카드 렌더 헬퍼 ============ */
+function dealChips(l){
+  var h = '';
+  if(l.deals.sale) h += '<span class="chip sale">매매 ' + money(l.deals.sale.price) + '</span>';
+  if(l.deals.jeonse) h += '<span class="chip jeonse">전세 ' + money(l.deals.jeonse.price) + '</span>';
+  if(l.deals.wolse) h += '<span class="chip wolse">월세 ' + money(l.deals.wolse.deposit) + '/' + l.deals.wolse.rent + '</span>';
+  if(l.deals.direct) h += '<span class="chip direct">직거래</span>';
+  if(l.deals.auction) h += '<span class="chip auction">경매</span>';
+  return h;
+}
+function mainPrice(l){
+  if(l.deals.sale) return { label:'매매', val: money(l.deals.sale.price) };
+  if(l.deals.jeonse) return { label:'전세', val: money(l.deals.jeonse.price) };
+  if(l.deals.wolse) return { label:'월세', val: money(l.deals.wolse.deposit) + '/' + l.deals.wolse.rent };
+  return { label:'경매', val: money(l.deals.auction.minBid) };
+}
+function pcardHTML(l){
+  var favs = getFavs();
+  var on = favs.indexOf(l.id) >= 0;
+  var mp = mainPrice(l);
+  var html = '<div class="pcard" data-go="detail" data-id="' + l.id + '">';
+  html += '<div class="thumb">' + (l.deals.auction ? '<span class="badge">경매</span>' : '') + l.img;
+  html += '<button class="heart' + (on?' on':'') + '" data-fav="' + l.id + '">' + ic('heart',15) + '</button></div>';
+  html += '<div class="body"><div class="price">' + mp.label + ' ' + mp.val + '</div>';
+  html += '<div class="addr">' + esc(l.addr) + '</div>';
+  html += '<div class="meta">' + l.area + '㎡ · ' + l.floor + '층 · 방' + l.rooms + '</div>';
+  html += '<div class="chips">' + dealChips(l) + '</div></div></div>';
+  return html;
+}
+function rowcardHTML(l){
+  var mp = mainPrice(l);
+  var html = '<div class="rowcard" data-go="detail" data-id="' + l.id + '">';
+  html += '<div class="rthumb">' + l.img + '</div>';
+  html += '<div class="rmain"><h4>' + esc(l.addr) + '</h4>';
+  html += '<div class="raddr">' + l.type + ' · ' + l.area + '㎡ · ' + l.floor + '층 · 방' + l.rooms + '/욕실' + l.baths + ' · 확인일 ' + l.confirmed + '</div>';
+  html += '<div class="chips">' + dealChips(l) + '</div></div>';
+  html += '<div class="rprice"><div class="p1">' + mp.label + ' ' + mp.val + '</div><div class="p2">' + l.region2 + '</div></div></div>';
+  return html;
+}
+
+/* ============ PAGE: HOME ============ */
+function pageHome(){
+  var recos = LISTINGS.slice(0,4);
+  var html = '';
+  html += '<section class="hero"><div class="wrap">';
+  html += '<div class="eyebrow">Since 청주 · 부동산 통합 거래소</div>';
+  html += '<h1>한 번의 검색으로<br>매매·전세·월세·경매를 <em>동시에 비교</em>합니다</h1>';
+  html += '<p class="sub">같은 주소의 일반매물·소유자 직거래·법원경매를 하나의 시세판에서 확인하고, 가장 합리적인 방식으로 안전하게 거래하세요.</p>';
+  html += '<div class="searchbox"><select id="hs-type"><option value="all">전체</option><option value="sale">매매</option><option value="jeonse">전세</option><option value="wolse">월세</option><option value="auction">경매</option></select>';
+  html += '<input id="hs-kw" type="text" placeholder="지역, 아파트, 단지명으로 검색 (예: 오송, 청주 흥덕)">';
+  html += '<button id="hs-go">' + ic('search',16) + ' 검색</button></div>';
+  html += '<div class="quicktags"><a href="#/search?region=오송">오송 매물</a><a href="#/search?region=오창">오창 매물</a><a href="#/search?region=세종">세종 매물</a><a href="#/auction">법원경매</a><a href="#/price">실거래가</a></div>';
+  html += '</div></section>';
+
+  html += '<section class="block"><div class="wrap">';
+  html += '<div class="blockhead"><div><span class="lbl">Quick Access</span><h2>거래유형 바로가기</h2></div></div>';
+  html += '<div class="typegrid">';
+  var types = [['home','매매','sale'],['building','전세','jeonse'],['pin','월세','wolse'],['chat','직거래','direct'],['gavel','법원경매','auction'],['building','상가·사무실','biz']];
+  for(var i=0;i<types.length;i++){
+    html += '<a href="#/search?deal=' + types[i][2] + '"><div class="ic">' + ic(types[i][0],26) + '</div><div class="tl">' + types[i][1] + '</div></a>';
+  }
+  html += '</div></div></section>';
+
+  html += '<section class="block"><div class="wrap">';
+  html += '<div class="blockhead"><div><span class="lbl">Recommended</span><h2>내 조건에 맞는 추천 매물</h2></div><a class="more" href="#/search">전체보기</a></div>';
+  html += '<div class="cardgrid">';
+  for(var i=0;i<recos.length;i++){ html += pcardHTML(recos[i]); }
+  html += '</div></div></section>';
+
+  html += '<section class="block"><div class="wrap">';
+  html += '<div class="blockhead"><div><span class="lbl">Local Finance</span><h2>지역 금융기관 상담</h2></div><a class="more" href="#/finance">전체보기</a></div>';
+  html += '<div class="financestrip">';
+  for(var i=0;i<3;i++){
+    var f = FINANCE[i];
+    html += '<div class="fitem"><div class="ficon">' + ic('bank',18) + '</div><div><div class="ft">' + esc(f.name) + '</div><div class="fs">' + esc(f.products.join(' · ')) + ' · ' + f.rate + '</div></div></div>';
+  }
+  html += '</div></div></section>';
+
+  html += '<section class="block" style="border-bottom:none;"><div class="wrap">';
+  html += '<div class="blockhead"><div><span class="lbl">Local Insight</span><h2>지역 콘텐츠</h2></div></div>';
+  html += '<div class="newsgrid">';
+  for(var i=0;i<NEWS.length;i++){
+    html += '<div class="newscard"><div class="tag">' + esc(NEWS[i].tag) + '</div><h4>' + esc(NEWS[i].title) + '</h4><p>' + esc(NEWS[i].desc) + '</p></div>';
+  }
+  html += '</div></div></section>';
+  return html;
+}
+
+/* ============ PAGE: SEARCH ============ */
+var searchState = { deal:'all', type:'all', region:'all', priceMax:100000, direct:false, verified:false, sort:'default' };
+function pageSearch(qs){
+  if(qs){
+    var params = new URLSearchParams(qs);
+    if(params.get('region')) searchState.region = params.get('region');
+    if(params.get('deal')) searchState.deal = params.get('deal');
+  }
+  var html = '<div class="wrap"><div class="searchlayout">';
+  html += '<div class="filterpanel">';
+  html += '<h3>' + ic('filter',14) + ' 거래유형</h3>';
+  html += '<div class="dealtabs" id="dealtabs">';
+  var deals = [['all','전체'],['sale','매매'],['jeonse','전세'],['wolse','월세'],['direct','직거래'],['auction','경매']];
+  for(var i=0;i<deals.length;i++){
+    html += '<button data-deal="' + deals[i][0] + '" class="' + (searchState.deal===deals[i][0]?'active':'') + '">' + deals[i][1] + '</button>';
+  }
+  html += '</div>';
+
+  html += '<div class="fgroup"><label>지역</label><select id="f-region"><option value="all">전체 지역</option><option value="오송">오송</option><option value="오창">오창</option><option value="세종">세종</option><option value="청주 상당">청주 상당</option><option value="청주 흥덕">청주 흥덕</option><option value="청주 청원">청주 청원</option><option value="천안">천안</option></select></div>';
+  html += '<div class="fgroup"><label>부동산 유형</label><select id="f-type"><option value="all">전체</option><option value="아파트">아파트</option><option value="오피스텔">오피스텔</option><option value="빌라">빌라</option></select></div>';
+  html += '<div class="fgroup"><label>가격 상한 (만원)</label><input type="range" id="f-price" min="10000" max="100000" step="1000" value="' + searchState.priceMax + '" style="width:100%"><div style="font-family:var(--mono);font-size:12px;margin-top:6px;">~ <b id="f-price-lbl">' + money(searchState.priceMax) + '</b></div></div>';
+  html += '<div class="fgroup" style="border-bottom:none;"><label>추가 조건</label>';
+  html += '<div class="checkrow"><input type="checkbox" id="f-direct"> 소유자 직거래만</div>';
+  html += '<div class="checkrow"><input type="checkbox" id="f-verified"> 확인된 매물만</div></div>';
+  html += '</div>';
+
+  html += '<div class="searchresults"><div class="resultshead"><div class="cnt">검색결과 <span id="rescount">0</span>건</div>';
+  html += '<select id="f-sort"><option value="default">신뢰도순</option><option value="priceAsc">가격 낮은순</option><option value="priceDesc">가격 높은순</option><option value="recent">최신등록순</option></select></div>';
+  html += '<div class="resultslist" id="resultslist"></div></div>';
+  html += '</div></div>';
+  return html;
+}
+function runSearch(){
+  var region = document.getElementById('f-region').value;
+  var type = document.getElementById('f-type').value;
+  var priceMax = parseInt(document.getElementById('f-price').value,10);
+  var direct = document.getElementById('f-direct').checked;
+  var verified = document.getElementById('f-verified').checked;
+  var sort = document.getElementById('f-sort').value;
+  var deal = searchState.deal;
+
+  var list = LISTINGS.filter(function(l){
+    if(region !== 'all' && l.region !== region) return false;
+    if(type !== 'all' && l.type !== type) return false;
+    if(deal !== 'all'){
+      if(deal === 'direct' && !l.deals.direct) return false;
+      if(deal !== 'direct' && !l.deals[deal]) return false;
+    }
+    if(direct && !l.deals.direct) return false;
+    var mp = mainPrice(l);
+    var mpNum = l.deals.sale ? l.deals.sale.price : (l.deals.jeonse ? l.deals.jeonse.price : (l.deals.wolse ? l.deals.wolse.deposit + l.deals.wolse.rent*100 : (l.deals.auction ? l.deals.auction.minBid : 0)));
+    if(mpNum > priceMax) return false;
+    if(verified){
+      var anyVerified = (l.deals.sale && l.deals.sale.verified) || (l.deals.jeonse && l.deals.jeonse.verified) || (l.deals.wolse && l.deals.wolse.verified);
+      if(!anyVerified) return false;
+    }
+    return true;
+  });
+
+  if(sort === 'priceAsc' || sort === 'priceDesc'){
+    list.sort(function(a,b){
+      var pa = a.deals.sale ? a.deals.sale.price : (a.deals.jeonse ? a.deals.jeonse.price : 0);
+      var pb = b.deals.sale ? b.deals.sale.price : (b.deals.jeonse ? b.deals.jeonse.price : 0);
+      return sort === 'priceAsc' ? pa-pb : pb-pa;
+    });
+  } else if(sort === 'recent'){
+    list.sort(function(a,b){ return a.confirmed < b.confirmed ? 1 : -1; });
+  }
+
+  document.getElementById('rescount').textContent = list.length;
+  var rl = document.getElementById('resultslist');
+  if(list.length === 0){
+    rl.innerHTML = '<div class="empty">' + ic('search',34) + '<div>조건에 맞는 매물이 없습니다. 필터를 조정해보세요.</div></div>';
+  } else {
+    var html = '';
+    for(var i=0;i<list.length;i++){ html += rowcardHTML(list[i]); }
+    rl.innerHTML = html;
+  }
+  bindCardGoEvents();
+}
+function bindSearchEvents(){
+  document.getElementById('f-region').value = searchState.region;
+  var dt = document.getElementById('dealtabs');
+  dt.addEventListener('click', function(e){
+    var b = e.target.closest('button');
+    if(!b) return;
+    searchState.deal = b.getAttribute('data-deal');
+    Array.prototype.forEach.call(dt.querySelectorAll('button'), function(x){ x.classList.remove('active'); });
+    b.classList.add('active');
+    runSearch();
+  });
+  document.getElementById('f-price').addEventListener('input', function(e){
+    document.getElementById('f-price-lbl').textContent = money(parseInt(e.target.value,10));
+    runSearch();
+  });
+  ['f-region','f-type','f-direct','f-verified','f-sort'].forEach(function(id){
+    document.getElementById(id).addEventListener('change', runSearch);
+  });
+  runSearch();
+}
+
+/* ============ PAGE: DETAIL ============ */
+function pageDetail(id){
+  var l = LISTINGS.filter(function(x){ return x.id === id; })[0];
+  if(!l) return '<div class="wrap" style="padding:60px 0"><div class="empty">매물을 찾을 수 없습니다. <a href="#/search">매물찾기로 이동</a></div></div>';
+  pushRecent(id);
+  var favs = getFavs();
+  var isFav = favs.indexOf(id) >= 0;
+
+  var html = '<div class="detailhero"><div class="wrap"><div class="dh-top">';
+  html += '<div class="dh-thumb">' + l.img + '</div>';
+  html += '<div><div class="dh-addr">' + esc(l.region2) + '</div><div class="dh-title">' + esc(l.addr) + '</div>';
+  html += '<div class="dh-meta"><div><b>' + l.type + '</b></div><div>전용 <b>' + l.area + '㎡</b></div><div><b>' + l.floor + '층</b></div><div>방 <b>' + l.rooms + '</b> · 욕실 <b>' + l.baths + '</b></div><div>주차 <b>' + (l.park?'가능':'불가') + '</b></div><div>최종확인 <b>' + l.confirmed + '</b></div></div>';
+  html += '<div style="margin-top:12px;font-size:12.5px;color:var(--ink-soft);">담당: ' + esc(l.agent) + ' (' + l.agentType + ')</div></div>';
+  html += '<div class="dh-actions"><button class="btn btn-solid" id="d-consult">' + ic('chat',15) + ' 채팅 문의</button>';
+  html += '<button class="btn" id="d-visit">' + ic('pin',15) + ' 현장방문 예약</button>';
+  html += '<button class="btn btn-ghost" id="d-fav">' + ic('heart',15) + (isFav?' 관심 해제':' 관심매물 저장') + '</button></div>';
+  html += '</div></div></div>';
+
+  // 시세 게시판
+  var rows = [];
+  var realAvg = l.realprice[l.realprice.length-1].p;
+  if(l.deals.sale) rows.push({name:'매매', color:'#B5482F', amt:money(l.deals.sale.price), diff:l.deals.sale.price-realAvg, verified:l.deals.sale.verified, note:l.deals.sale.count + '건 매물'});
+  if(l.deals.jeonse) rows.push({name:'전세', color:'#3F7A5D', amt:money(l.deals.jeonse.price), diff:null, verified:l.deals.jeonse.verified, note:'전세가율 ' + Math.round(l.deals.jeonse.price/(l.deals.sale?l.deals.sale.price:realAvg)*100) + '%'});
+  if(l.deals.wolse) rows.push({name:'월세', color:'#5B4A9A', amt:money(l.deals.wolse.deposit) + ' / ' + l.deals.wolse.rent + '만', diff:null, verified:l.deals.wolse.verified, note:'관리비 ' + l.deals.wolse.mgmt + '만'});
+  if(l.deals.direct) rows.push({name:'소유자 직거래', color:'#8A6A16', amt: l.deals.direct.dtype==='wolse' ? (money(l.deals.direct.deposit)+' / '+l.deals.direct.rent+'만') : money(l.deals.direct.price), diff:null, verified:l.deals.direct.verified, note:'소유자 인증완료 · '+ (l.deals.direct.dtype||'매매')});
+  if(l.deals.auction) rows.push({name:'법원경매', color:'#B23A3A', amt:money(l.deals.auction.minBid), diff:null, verified:true, note:l.deals.auction.caseNo + ' · 유찰 ' + l.deals.auction.failedCount + '회'});
+
+  html += '<div class="board"><div class="wrap" style="padding:0"><table><thead><tr><th>거래유형</th><th>가격</th><th>실거래가 대비</th><th>확인상태</th><th>비고</th></tr></thead><tbody>';
+  for(var i=0;i<rows.length;i++){
+    var r = rows[i];
+    html += '<tr><td class="dealname"><span class="swatch" style="background:' + r.color + '"></span>' + r.name + '</td>';
+    html += '<td class="amt">' + r.amt + '</td>';
+    html += '<td>' + (r.diff!=null ? ('<span class="' + (r.diff>0?'diffup':'diffdn') + '">' + (r.diff>0?'+':'') + numfmt(r.diff) + '만</span>') : '<span style="color:#8FA0C4">-</span>') + '</td>';
+    html += '<td><span class="vbadge' + (r.verified?' ok':'') + '">' + (r.verified?'확인완료':'확인필요') + '</span></td>';
+    html += '<td style="color:#B9C2D6;font-family:var(--sans);font-size:12px;">' + esc(r.note) + '</td></tr>';
+  }
+  html += '</tbody></table></div></div>';
+
+  html += '<div class="wrap"><div class="detailbody"><div class="dmain">';
+
+  // 가격분석
+  html += '<div class="dsection"><h3><span class="num">01</span> 가격분석 — 실거래가 추이</h3>';
+  var maxP = Math.max.apply(null, l.realprice.map(function(x){return x.p;}));
+  html += '<div class="barchart">';
+  for(var i=0;i<l.realprice.length;i++){
+    var h = Math.round((l.realprice[i].p / maxP) * 100);
+    var isLast = i === l.realprice.length-1;
+    html += '<div class="bcol"><div class="bval">' + money(l.realprice[i].p) + '</div><div class="bar' + (isLast?' hi':'') + '" style="height:' + h + 'px"></div><div class="blabel">' + l.realprice[i].d + '</div></div>';
+  }
+  html += '</div>';
+  var aiLow = Math.round(realAvg*0.96), aiHigh = Math.round(realAvg*1.05);
+  var curPrice = l.deals.sale ? l.deals.sale.price : realAvg;
+  var pct = Math.min(100, Math.max(0, Math.round((curPrice-aiLow)/(aiHigh-aiLow)*100)));
+  html += '<div style="margin-top:20px;font-size:12.5px;font-weight:700;color:var(--ink-soft);">AI 적정가격 범위 (참고용)</div>';
+  html += '<div class="rangebar"><div class="fill" style="width:100%"></div><div class="marker" style="left:' + pct + '%"></div></div>';
+  html += '<div class="rangelabels"><span>' + money(aiLow) + '</span><span>' + money(aiHigh) + '</span></div></div>';
+
+  // 안전권리정보
+  html += '<div class="dsection"><h3><span class="num">02</span> 안전·권리정보</h3><div class="safetygrid">';
+  var safety = [
+    ['소유자 확인 완료', '등기 기준 소유관계 확인됨', true],
+    ['중개의뢰 확인 완료', '개업공인중개사 정식 의뢰 확인', true],
+    ['위반건축물 없음', '건축물대장 기준 위반사항 없음', true],
+    ['근저당 확인 필요', '계약 전 등기사항증명서 재확인 권장', false]
+  ];
+  for(var i=0;i<safety.length;i++){
+    html += '<div class="sitem' + (safety[i][2]?'':' warn') + '"><div class="sic">' + ic(safety[i][2]?'check':'shield',16) + '</div><div><div class="st">' + safety[i][0] + '</div><div class="sd">' + safety[i][1] + '</div></div></div>';
+  }
+  html += '</div></div>';
+
+  // 금융계획 계산기
+  html += '<div class="dsection"><h3><span class="num">03</span> 금융계획 계산기</h3>';
+  html += '<div class="calcrow"><input type="number" id="calc-own" placeholder="보유자금 (만원)" value="15000"><input type="number" id="calc-rate" placeholder="예상 금리 (%)" value="4.2" step="0.1"></div>';
+  html += '<button class="btn btn-sm" id="calc-run">계산하기</button>';
+  html += '<div class="calcresult" id="calc-out"></div>';
+  html += '<div style="margin-top:10px;"><a href="#/finance" class="btn btn-sm btn-ghost">' + ic('bank',13) + ' 지역 금융기관 상담 연결</a></div></div>';
+
+  // 입지정보
+  html += '<div class="dsection"><h3><span class="num">04</span> 입지정보</h3>';
+  html += '<div class="locrow"><span>' + ic('car',14) + ' 대중교통</span><span>인근 버스정류장 도보 4분</span></div>';
+  html += '<div class="locrow"><span>' + ic('school',14) + ' 학군</span><span>초등학교 도보 7분 · 중학교 도보 12분</span></div>';
+  html += '<div class="locrow"><span>' + ic('building',14) + ' 상권</span><span>대형마트 차량 5분 거리</span></div>';
+  html += '<div class="locrow"><span>' + ic('pin',14) + ' 출퇴근</span><span>오송역까지 차량 약 9분</span></div></div>';
+
+  html += '</div>'; // dmain
+
+  // sidebar
+  html += '<div class="sidebar">';
+  html += '<div class="side-box"><h4>담당 중개사</h4><div class="agentcard"><div class="av">' + l.agent.charAt(0) + '</div><div><div class="an">' + esc(l.agent) + '</div><div class="ao">' + l.agentType + ' · 확인완료</div></div></div>';
+  html += '<div class="stackbtn"><button class="btn btn-solid btn-sm" id="d-consult2">' + ic('chat',13) + ' 앱 채팅으로 문의</button><button class="btn btn-sm" id="d-call">' + ic('phone',13) + ' 안심번호 통화</button></div></div>';
+
+  html += '<div class="side-box"><h4>거래 관련 지원</h4><div class="stackbtn">';
+  html += '<button class="btn btn-sm btn-ghost" id="d-negotiate">가격협상 제안</button>';
+  html += '<button class="btn btn-sm btn-ghost" id="d-loanreq">계약지원 신청</button>';
+  html += '<button class="btn btn-sm btn-ghost" id="d-report">' + ic('shield',13) + ' 허위매물 신고</button></div></div>';
+
+  if(l.deals.auction){
+    html += '<div class="side-box"><h4>연계 법원경매</h4><div class="locrow"><span>사건번호</span><span>' + l.deals.auction.caseNo + '</span></div>';
+    html += '<div class="locrow"><span>매각기일</span><span>' + l.deals.auction.saleDate + '</span></div>';
+    html += '<a href="#/auction/' + l.id + '" class="btn btn-sm" style="margin-top:10px;display:block;text-align:center;">경매 상세 · 계산기 보기</a></div>';
+  }
+  html += '</div>'; // sidebar
+
+  html += '</div></div>'; // detailbody / wrap
+  return html;
+}
+function bindDetailEvents(id){
+  var l = LISTINGS.filter(function(x){ return x.id === id; })[0];
+  if(!l) return;
+  var favBtn = document.getElementById('d-fav');
+  if(favBtn) favBtn.addEventListener('click', function(){
+    var on = toggleFav(id);
+    favBtn.innerHTML = ic('heart',15) + (on?' 관심 해제':' 관심매물 저장');
+  });
+  ['d-consult','d-consult2'].forEach(function(bid){
+    var b = document.getElementById(bid);
+    if(b) b.addEventListener('click', function(){ toast('담당 중개사에게 채팅 문의를 전송했습니다'); });
+  });
+  var visitBtn = document.getElementById('d-visit');
+  if(visitBtn) visitBtn.addEventListener('click', function(){ toast('현장방문 예약 요청이 접수되었습니다'); });
+  var callBtn = document.getElementById('d-call');
+  if(callBtn) callBtn.addEventListener('click', function(){ toast('안심번호로 연결합니다 (실제 번호는 노출되지 않습니다)'); });
+  var negoBtn = document.getElementById('d-negotiate');
+  if(negoBtn) negoBtn.addEventListener('click', function(){ toast('가격협상 제안이 중개사에게 전달되었습니다'); });
+  var loanBtn = document.getElementById('d-loanreq');
+  if(loanBtn) loanBtn.addEventListener('click', function(){ toast('계약지원 신청이 접수되었습니다'); });
+  var repBtn = document.getElementById('d-report');
+  if(repBtn) repBtn.addEventListener('click', function(){ toast('허위매물 신고가 접수되었습니다. 검토 후 처리됩니다'); });
+  var calcBtn = document.getElementById('calc-run');
+  if(calcBtn) calcBtn.addEventListener('click', function(){
+    var own = parseInt(document.getElementById('calc-own').value,10) || 0;
+    var rate = parseFloat(document.getElementById('calc-rate').value) || 4.2;
+    var price = l.deals.sale ? l.deals.sale.price : (l.deals.jeonse ? l.deals.jeonse.price : 0);
+    var need = Math.max(0, price - own);
+    var monthlyRate = rate/100/12;
+    var n = 360;
+    var monthly = need>0 ? Math.round(need * monthlyRate * Math.pow(1+monthlyRate,n) / (Math.pow(1+monthlyRate,n)-1)) : 0;
+    var tax = Math.round(price * 0.011);
+    var out = document.getElementById('calc-out');
+    out.innerHTML = '<div class="cr-row"><span>매물가격</span><span>' + money(price) + '</span></div>' +
+      '<div class="cr-row"><span>보유자금</span><span>' + money(own) + '</span></div>' +
+      '<div class="cr-row"><span>필요 대출금</span><span>' + money(need) + '</span></div>' +
+      '<div class="cr-row"><span>취득세·등기비용(약)</span><span>' + money(tax) + '</span></div>' +
+      '<div class="cr-row total"><span>예상 월 상환액 (30년 원리금균등, 참고용)</span><span>' + numfmt(monthly) + '만원</span></div>';
+  });
+}
+
+/* ============ PAGE: AUCTION LIST ============ */
+function pageAuctionList(){
+  var list = LISTINGS.filter(function(l){ return l.deals.auction; });
+  var html = '<div class="wrap" style="padding:36px 0 60px;">';
+  html += '<div class="blockhead"><div><span class="lbl">Court Auction</span><h2>법원경매 물건</h2></div></div>';
+  html += '<p style="font-size:13px;color:var(--ink-soft);margin-bottom:24px;max-width:640px;">권리분석 요약과 계산기는 참고용이며, 실제 입찰은 관할 법원의 공식 절차와 문서를 반드시 확인해야 합니다.</p>';
+  html += '<div class="auctiongrid">';
+  for(var i=0;i<list.length;i++){
+    var l = list[i]; var a = l.deals.auction;
+    html += '<div class="acard" data-go="detail" data-id="' + l.id + '"><div class="ahead"><span class="acase">' + a.caseNo + '</span><span class="around">유찰 ' + a.failedCount + '회</span></div>';
+    html += '<h4>' + esc(l.addr) + '</h4>';
+    html += '<div class="arow"><span>법원</span><b>' + a.court + '</b></div>';
+    html += '<div class="arow"><span>감정가</span><b>' + money(a.appraised) + '</b></div>';
+    html += '<div class="arow"><span>최저매각가격</span><b>' + money(a.minBid) + '</b></div>';
+    html += '<div class="arow"><span>매각기일</span><b>' + a.saleDate + '</b></div></div>';
+  }
+  html += '</div>';
+
+  html += '<div class="dsection" style="margin-top:32px;"><h3>' + ic('calc',18) + ' 적정 입찰가 · 총투자비 계산기</h3>';
+  html += '<div class="calcrow"><select id="ac-target"><option value="">경매물건 선택</option>';
+  for(var i=0;i<list.length;i++){ html += '<option value="' + list[i].id + '">' + esc(list[i].addr) + '</option>'; }
+  html += '</select><input type="number" id="ac-yield" placeholder="목표 수익률 (%)" value="10"></div>';
+  html += '<div class="calcrow"><input type="number" id="ac-repair" placeholder="예상 명도·수리비 (만원)" value="500"></div>';
+  html += '<button class="btn btn-sm" id="ac-run">계산하기</button>';
+  html += '<div class="calcresult" id="ac-out"></div></div>';
+
+  html += '</div>';
+  return html;
+}
+function bindAuctionEvents(){
+  var btn = document.getElementById('ac-run');
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    var id = document.getElementById('ac-target').value;
+    var l = LISTINGS.filter(function(x){ return x.id === id; })[0];
+    var out = document.getElementById('ac-out');
+    if(!l){ out.innerHTML = '<div style="color:var(--danger);font-size:12.5px;">경매물건을 선택해주세요</div>'; return; }
+    var a = l.deals.auction;
+    var yieldPct = parseFloat(document.getElementById('ac-yield').value) || 10;
+    var repair = parseInt(document.getElementById('ac-repair').value,10) || 0;
+    var marketPrice = l.realprice[l.realprice.length-1].p;
+    var suggestedBid = Math.round((marketPrice - repair) / (1 + yieldPct/100));
+    suggestedBid = Math.max(suggestedBid, a.minBid);
+    var totalCost = suggestedBid + repair + Math.round(suggestedBid*0.045);
+    var expectedProfit = marketPrice - totalCost;
+    out.innerHTML = '<div class="cr-row"><span>감정가 / 최저매각가격</span><span>' + money(a.appraised) + ' / ' + money(a.minBid) + '</span></div>' +
+      '<div class="cr-row"><span>주변 시세(참고)</span><span>' + money(marketPrice) + '</span></div>' +
+      '<div class="cr-row"><span>제안 적정 입찰가</span><span>' + money(suggestedBid) + '</span></div>' +
+      '<div class="cr-row"><span>취득세·명도·수리비 포함 총투자비</span><span>' + money(totalCost) + '</span></div>' +
+      '<div class="cr-row total"><span>예상 수익(참고용)</span><span>' + money(expectedProfit) + '</span></div>';
+  });
+}
+
+/* ============ PAGE: REAL PRICE ============ */
+function pagePrice(){
+  var html = '<div class="wrap" style="padding:36px 0 60px;">';
+  html += '<div class="blockhead"><div><span class="lbl">Official Transaction Data</span><h2>실거래가 조회</h2></div></div>';
+  html += '<div style="display:flex;gap:10px;margin-bottom:20px;"><select id="rp-select" style="flex:1;border:1px solid var(--line);padding:10px;border-radius:2px;">';
+  for(var i=0;i<LISTINGS.length;i++){ html += '<option value="' + LISTINGS[i].id + '">' + esc(LISTINGS[i].addr) + '</option>'; }
+  html += '</select><button class="btn btn-solid" id="rp-run">조회</button></div>';
+  html += '<div id="rp-result"></div>';
+
+  html += '<div class="dsection" style="margin-top:30px;"><h3>비교도구</h3>';
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">';
+  html += '<div><h5 style="font-size:12.5px;font-weight:800;margin-bottom:8px;">전세 vs 월세 2년 총비용 비교</h5>';
+  html += '<div class="calcrow"><input type="number" id="cmp-jeonse" placeholder="전세보증금(만원)" value="30000"></div>';
+  html += '<div class="calcrow"><input type="number" id="cmp-deposit" placeholder="월세 보증금(만원)" value="3000"><input type="number" id="cmp-rent" placeholder="월세(만원)" value="90"></div>';
+  html += '<button class="btn btn-sm" id="cmp-run">비교하기</button><div class="calcresult" id="cmp-out"></div></div>';
+  html += '<div><h5 style="font-size:12.5px;font-weight:800;margin-bottom:8px;">일반매매 vs 경매 비교</h5>';
+  html += '<div class="calcrow"><input type="number" id="cmp2-market" placeholder="일반매매가(만원)" value="48000"></div>';
+  html += '<div class="calcrow"><input type="number" id="cmp2-bid" placeholder="예상 낙찰가(만원)" value="38000"><input type="number" id="cmp2-cost" placeholder="명도·수리비(만원)" value="800"></div>';
+  html += '<button class="btn btn-sm" id="cmp2-run">비교하기</button><div class="calcresult" id="cmp2-out"></div></div>';
+  html += '</div></div>';
+  html += '</div>';
+  return html;
+}
+function bindPriceEvents(){
+  function runRp(){
+    var id = document.getElementById('rp-select').value;
+    var l = LISTINGS.filter(function(x){ return x.id === id; })[0];
+    var out = document.getElementById('rp-result');
+    if(!l){ out.innerHTML=''; return; }
+    var html = '<table class="pricetable"><thead><tr><th>거래월</th><th>면적</th><th>층</th><th>거래가격</th></tr></thead><tbody>';
+    for(var i=0;i<l.realprice.length;i++){
+      html += '<tr><td>' + l.realprice[i].d + '</td><td>' + l.area + '㎡</td><td>' + (l.floor - (l.realprice.length-1-i)) + '층</td><td>' + money(l.realprice[i].p) + '</td></tr>';
+    }
+    html += '</tbody></table>';
+    out.innerHTML = html;
+  }
+  document.getElementById('rp-run').addEventListener('click', runRp);
+  runRp();
+
+  document.getElementById('cmp-run').addEventListener('click', function(){
+    var jeonse = parseInt(document.getElementById('cmp-jeonse').value,10) || 0;
+    var dep = parseInt(document.getElementById('cmp-deposit').value,10) || 0;
+    var rent = parseInt(document.getElementById('cmp-rent').value,10) || 0;
+    var jeonseOpportunity = Math.round(jeonse * 0.035);
+    var out = document.getElementById('cmp-out');
+    out.innerHTML = '<div class="cr-row"><span>전세 (기회비용 연 3.5% 가정, 참고용)</span><span>' + numfmt(jeonseOpportunity*2) + '만 / 2년</span></div>' +
+      '<div class="cr-row"><span>월세 2년 총액 (월세×24)</span><span>' + numfmt(rent*24) + '만</span></div>' +
+      '<div class="cr-row total"><span>결과</span><span>' + (jeonseOpportunity*2 < rent*24 ? '전세가 유리(참고용)' : '월세가 유리(참고용)') + '</span></div>';
+  });
+  document.getElementById('cmp2-run').addEventListener('click', function(){
+    var market = parseInt(document.getElementById('cmp2-market').value,10) || 0;
+    var bid = parseInt(document.getElementById('cmp2-bid').value,10) || 0;
+    var cost = parseInt(document.getElementById('cmp2-cost').value,10) || 0;
+    var total = bid + cost + Math.round(bid*0.045);
+    var save = market - total;
+    var out = document.getElementById('cmp2-out');
+    out.innerHTML = '<div class="cr-row"><span>일반매매가</span><span>' + money(market) + '</span></div>' +
+      '<div class="cr-row"><span>경매 총투자비(낙찰가+제비용+명도수리)</span><span>' + money(total) + '</span></div>' +
+      '<div class="cr-row total"><span>예상 절감액(참고용)</span><span>' + money(save) + '</span></div>';
+  });
+}
+
+/* ============ PAGE: FINANCE ============ */
+function pageFinance(){
+  var html = '<div class="wrap" style="padding:36px 0 60px;">';
+  html += '<div class="blockhead"><div><span class="lbl">Financial Consulting</span><h2>지역 금융기관 비교·상담</h2></div></div>';
+
+  html += '<div class="dsection"><h3>' + ic('calc',18) + ' 자금계획 계산기</h3>';
+  html += '<div class="calcrow"><input type="number" id="fin-price" placeholder="매물가격(만원)" value="48000"><input type="number" id="fin-own" placeholder="보유자금(만원)" value="18000"></div>';
+  html += '<div class="calcrow"><input type="number" id="fin-rate" placeholder="예상 금리(%)" value="4.2" step="0.1"></div>';
+  html += '<button class="btn btn-sm" id="fin-run">계산하기</button><div class="calcresult" id="fin-out"></div></div>';
+
+  html += '<div class="blockhead" style="margin-top:34px;"><h2 style="font-size:19px;">지역 금융기관</h2></div>';
+  html += '<div class="fininstgrid">';
+  for(var i=0;i<FINANCE.length;i++){
+    var f = FINANCE[i];
+    html += '<div class="fcard"><div class="flogo">' + f.name.charAt(0) + '</div><div style="flex:1;">';
+    html += '<div class="ftitle"><div><div class="fname">' + esc(f.name) + '</div><div class="fdist">' + f.dist + ' · ' + f.region + '</div></div>' + (f.ad?'<span class="adtag">광고</span>':'') + '</div>';
+    html += '<div class="fprod">' + esc(f.products.join(' · ')) + '</div>';
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;"><span class="frate">' + f.rate + '</span><button class="btn btn-sm" data-consult="' + i + '">상담 신청</button></div>';
+    html += '</div></div>';
+  }
+  html += '</div></div>';
+  return html;
+}
+function bindFinanceEvents(){
+  document.getElementById('fin-run').addEventListener('click', function(){
+    var price = parseInt(document.getElementById('fin-price').value,10) || 0;
+    var own = parseInt(document.getElementById('fin-own').value,10) || 0;
+    var rate = parseFloat(document.getElementById('fin-rate').value) || 4.2;
+    var need = Math.max(0, price - own);
+    var mRate = rate/100/12, n = 360;
+    var monthly = need>0 ? Math.round(need*mRate*Math.pow(1+mRate,n)/(Math.pow(1+mRate,n)-1)) : 0;
+    var out = document.getElementById('fin-out');
+    out.innerHTML = '<div class="cr-row"><span>필요 대출금</span><span>' + money(need) + '</span></div>' +
+      '<div class="cr-row total"><span>예상 월 상환액(30년 원리금균등, 참고용)</span><span>' + numfmt(monthly) + '만원</span></div>';
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-consult]'), function(b){
+    b.addEventListener('click', function(){
+      var f = FINANCE[parseInt(b.getAttribute('data-consult'),10)];
+      var u = getUser();
+      if(!u){ toast('상담 신청은 로그인 후 이용 가능합니다'); document.getElementById('loginbtn').click(); return; }
+      addConsult({ inst:f.name, date: new Date().toISOString().slice(0,10), status:'접수' });
+      toast(f.name + '에 상담 신청이 접수되었습니다');
+    });
+  });
+}
+
+/* ============ PAGE: REGISTER ============ */
+function pageRegister(){
+  var html = '<div class="wrap" style="padding:36px 0 60px;max-width:760px;">';
+  html += '<div class="blockhead"><div><span class="lbl">List Your Property</span><h2>매물 등록</h2></div></div>';
+  html += '<div class="dsection">';
+  html += '<div class="fld"><label>등록자 유형</label><select id="rg-owner"><option value="owner">소유자</option><option value="lessor">임대권한 보유자</option><option value="agent">개업공인중개사</option></select></div>';
+
+  html += '<div class="fld"><label>거래조건 (복수 선택 가능)</label>';
+  html += '<div class="dealcheckgrid">';
+  html += '<label><input type="checkbox" data-deal="sale"> 매매</label>';
+  html += '<label><input type="checkbox" data-deal="jeonse"> 전세</label>';
+  html += '<label><input type="checkbox" data-deal="wolse"> 월세</label>';
+  html += '</div></div>';
+
+  html += '<div class="dealconditions" id="cond-sale"><h5>매매 조건</h5><div class="fld"><label>매매가격 (만원)</label><input type="number" id="rg-sale-price" placeholder="예: 48000"></div></div>';
+  html += '<div class="dealconditions" id="cond-jeonse"><h5>전세 조건</h5><div class="fld"><label>전세보증금 (만원)</label><input type="number" id="rg-jeonse-price" placeholder="예: 32000"></div></div>';
+  html += '<div class="dealconditions" id="cond-wolse"><h5>월세 조건</h5><div class="form-two"><div class="fld"><label>보증금 (만원)</label><input type="number" id="rg-wolse-dep"></div><div class="fld"><label>월세 (만원)</label><input type="number" id="rg-wolse-rent"></div></div></div>';
+
+  html += '<div class="form-two">';
+  html += '<div class="fld"><label>주소</label><input type="text" id="rg-addr" placeholder="청주시 흥덕구 ○○동 ○○아파트 ○동"></div>';
+  html += '<div class="fld"><label>부동산 유형</label><select id="rg-type"><option>아파트</option><option>오피스텔</option><option>빌라</option><option>단독주택</option></select></div>';
+  html += '<div class="fld"><label>전용면적 (㎡)</label><input type="number" id="rg-area" placeholder="84"></div>';
+  html += '<div class="fld"><label>해당 층 / 전체 층</label><input type="text" id="rg-floor" placeholder="12 / 25"></div>';
+  html += '<div class="fld"><label>방 수</label><input type="number" id="rg-rooms" placeholder="3"></div>';
+  html += '<div class="fld"><label>입주 가능일</label><input type="date" id="rg-movein"></div>';
+  html += '</div>';
+  html += '<div class="fld"><label>매물 설명</label><textarea id="rg-desc" placeholder="옵션, 수리상태, 특이사항 등을 입력하세요"></textarea></div>';
+
+  html += '<div class="checkrow" style="margin-top:0;"><input type="checkbox" id="rg-verify"> 본인인증 및 소유자·임대권한 확인에 동의합니다 (필수)</div>';
+  html += '<div class="checkrow"><input type="checkbox" id="rg-direct"> 소유자 직거래로 표시 (중개사무소 의뢰 없음)</div>';
+  html += '<button class="btn btn-solid" id="rg-submit" style="margin-top:18px;">매물 등록하기</button>';
+  html += '</div></div>';
+  return html;
+}
+function bindRegisterEvents(){
+  var boxes = document.querySelectorAll('.dealcheckgrid input');
+  Array.prototype.forEach.call(boxes, function(cb){
+    cb.addEventListener('change', function(){
+      var target = document.getElementById('cond-' + cb.getAttribute('data-deal'));
+      target.classList.toggle('show', cb.checked);
+    });
+  });
+  document.getElementById('rg-submit').addEventListener('click', function(){
+    var u = getUser();
+    if(!u){ toast('매물 등록은 로그인 후 이용 가능합니다'); document.getElementById('loginbtn').click(); return; }
+    if(!document.getElementById('rg-verify').checked){ toast('본인인증 및 권한 확인 동의가 필요합니다'); return; }
+    var addr = document.getElementById('rg-addr').value;
+    if(!addr){ toast('주소를 입력해주세요'); return; }
+    var my = getMyListings();
+    my.unshift({ addr:addr, date:new Date().toISOString().slice(0,10), status:'검수중' });
+    STORE.set('mylistings', my);
+    toast('매물 등록 신청이 접수되었습니다. 관리자 검수 후 공개됩니다');
+    setTimeout(function(){ location.hash = '#/mypage'; }, 900);
+  });
+}
+
+/* ============ PAGE: MYPAGE ============ */
+var mypageTab = 'favs';
+function pageMypage(){
+  var u = getUser();
+  if(!u){
+    return '<div class="wrap" style="padding:70px 0;"><div class="empty">' + ic('home',34) + '<div>로그인 후 마이페이지를 이용할 수 있습니다.</div><button class="btn btn-solid" style="margin-top:14px;" id="mp-login">로그인하기</button></div></div>';
+  }
+  var favs = getFavs();
+  var recent = STORE.get('recent', []);
+  var consults = getConsults();
+  var mylistings = getMyListings();
+
+  var html = '<div class="wrap" style="padding:36px 0 60px;">';
+  html += '<div class="blockhead"><div><span class="lbl">My Page</span><h2>' + esc(u.name) + '님의 마이페이지</h2></div><div class="pvchip" style="position:static;">' + numfmt(u.pv) + ' PV</div></div>';
+  html += '<div class="tabbar" id="mp-tabs">';
+  var tabs = [['favs','관심매물 (' + favs.length + ')'],['recent','최근 본 매물'],['consult','상담내역'],['mine','내가 등록한 매물'],['alerts','알림설정']];
+  for(var i=0;i<tabs.length;i++){
+    html += '<button data-tab="' + tabs[i][0] + '" class="' + (mypageTab===tabs[i][0]?'active':'') + '">' + tabs[i][1] + '</button>';
+  }
+  html += '</div><div id="mp-content"></div></div>';
+  return html;
+}
+function renderMypageContent(){
+  var c = document.getElementById('mp-content');
+  if(!c) return;
+  var favs = getFavs();
+  var recent = STORE.get('recent', []);
+  var consults = getConsults();
+  var mylistings = getMyListings();
+  var html = '';
+  if(mypageTab === 'favs'){
+    var items = LISTINGS.filter(function(l){ return favs.indexOf(l.id) >= 0; });
+    if(items.length===0){ html = '<div class="empty">' + ic('heart',30) + '<div>저장한 관심매물이 없습니다.</div></div>'; }
+    else { html = '<div class="cardgrid">'; for(var i=0;i<items.length;i++){ html += pcardHTML(items[i]); } html += '</div>'; }
+  } else if(mypageTab === 'recent'){
+    var items = recent.map(function(id){ return LISTINGS.filter(function(l){return l.id===id;})[0]; }).filter(Boolean);
+    if(items.length===0){ html = '<div class="empty">' + ic('search',30) + '<div>최근 본 매물이 없습니다.</div></div>'; }
+    else { html = '<div class="cardgrid">'; for(var i=0;i<items.length;i++){ html += pcardHTML(items[i]); } html += '</div>'; }
+  } else if(mypageTab === 'consult'){
+    if(consults.length===0){ html = '<div class="empty">' + ic('bank',30) + '<div>상담 신청 내역이 없습니다.</div></div>'; }
+    else {
+      html = '<table class="mgmttable"><thead><tr><th>금융기관</th><th>신청일</th><th>상태</th></tr></thead><tbody>';
+      for(var i=0;i<consults.length;i++){ html += '<tr><td>' + esc(consults[i].inst) + '</td><td>' + consults[i].date + '</td><td><span class="statuspill pend">' + consults[i].status + '</span></td></tr>'; }
+      html += '</tbody></table>';
+    }
+  } else if(mypageTab === 'mine'){
+    if(mylistings.length===0){ html = '<div class="empty">' + ic('building',30) + '<div>등록한 매물이 없습니다.</div><a href="#/register" class="btn btn-sm btn-solid" style="margin-top:12px;display:inline-block;">매물 등록하기</a></div>'; }
+    else {
+      html = '<table class="mgmttable"><thead><tr><th>주소</th><th>등록일</th><th>상태</th></tr></thead><tbody>';
+      for(var i=0;i<mylistings.length;i++){ html += '<tr><td>' + esc(mylistings[i].addr) + '</td><td>' + mylistings[i].date + '</td><td><span class="statuspill pend">' + mylistings[i].status + '</span></td></tr>'; }
+      html += '</tbody></table>';
+    }
+  } else if(mypageTab === 'alerts'){
+    var alerts = STORE.get('alerts', { price:true, newlisting:true, auction:false, chat:true });
+    html = '<div class="dsection" style="max-width:480px;">';
+    var labels = [['price','가격 변동 알림'],['newlisting','관심지역 신규매물 알림'],['auction','경매 매각기일 알림'],['chat','채팅 메시지 알림']];
+    for(var i=0;i<labels.length;i++){
+      html += '<div class="togglerow"><span class="tl">' + labels[i][1] + '</span><button class="toggle' + (alerts[labels[i][0]]?' on':'') + '" data-alert="' + labels[i][0] + '"><span class="kn"></span></button></div>';
+    }
+    html += '</div>';
+  }
+  c.innerHTML = html;
+  if(mypageTab === 'alerts'){
+    Array.prototype.forEach.call(document.querySelectorAll('[data-alert]'), function(b){
+      b.addEventListener('click', function(){
+        var alerts = STORE.get('alerts', { price:true, newlisting:true, auction:false, chat:true });
+        var k = b.getAttribute('data-alert');
+        alerts[k] = !alerts[k];
+        STORE.set('alerts', alerts);
+        b.classList.toggle('on');
+      });
+    });
+  }
+  bindCardGoEvents();
+}
+function bindMypageEvents(){
+  var loginBtn = document.getElementById('mp-login');
+  if(loginBtn){ loginBtn.addEventListener('click', function(){ document.getElementById('loginbtn').click(); }); return; }
+  var tabs = document.getElementById('mp-tabs');
+  tabs.addEventListener('click', function(e){
+    var b = e.target.closest('button');
+    if(!b) return;
+    mypageTab = b.getAttribute('data-tab');
+    Array.prototype.forEach.call(tabs.querySelectorAll('button'), function(x){ x.classList.remove('active'); });
+    b.classList.add('active');
+    renderMypageContent();
+  });
+  renderMypageContent();
+}
+
+/* ============ PAGE: AGENT CENTER ============ */
+var PLANS = [
+  { name:'무료회원', cnt:'9건', price:'무료' },
+  { name:'스타트', cnt:'10건', price:'9,900원/월' },
+  { name:'베이직', cnt:'30건', price:'29,000원/월' },
+  { name:'프로', cnt:'50건', price:'49,000원/월' },
+  { name:'비즈니스', cnt:'100건', price:'89,000원/월' }
+];
+function pageAgent(){
+  var html = '<div class="wrap" style="padding:36px 0 60px;">';
+  html += '<div class="blockhead"><div><span class="lbl">Agent Console</span><h2>공인중개사 관리센터</h2></div></div>';
+
+  html += '<div class="statgrid">';
+  var stats = [['1,284','이번 달 매물 조회'],['96','관심등록'],['31','상담 전환'],['12','거래완료']];
+  for(var i=0;i<stats.length;i++){ html += '<div class="statcard"><div class="sv">' + stats[i][0] + '</div><div class="sl">' + stats[i][1] + '</div></div>'; }
+  html += '</div>';
+
+  html += '<div class="blockhead"><h2 style="font-size:18px;">요금제</h2></div>';
+  html += '<div class="plangrid">';
+  for(var i=0;i<PLANS.length;i++){
+    var cur = i===2;
+    html += '<div class="plancard' + (cur?' current':'') + '">' + (cur?'<div class="ptop">현재 플랜</div>':'') + '<div class="pname">' + PLANS[i].name + '</div><div class="pcnt">' + PLANS[i].cnt + '</div><div class="pprice">' + PLANS[i].price + '</div></div>';
+  }
+  html += '</div>';
+
+  html += '<div class="blockhead" style="margin-top:34px;"><h2 style="font-size:18px;">매물관리</h2><a href="#/register" class="more btn btn-sm">+ 신규 등록</a></div>';
+  html += '<table class="mgmttable"><thead><tr><th>주소</th><th>거래유형</th><th>확인일</th><th>상태</th></tr></thead><tbody>';
+  for(var i=0;i<LISTINGS.slice(0,6).length;i++){
+    var l = LISTINGS[i];
+    var st = i%3===0 ? ['done','거래완료'] : (i%3===1 ? ['live','노출중'] : ['pend','확인필요']);
+    html += '<tr><td>' + esc(l.addr) + '</td><td>' + dealChips(l) + '</td><td>' + l.confirmed + '</td><td><span class="statuspill ' + st[0] + '">' + st[1] + '</span></td></tr>';
+  }
+  html += '</tbody></table>';
+  html += '</div>';
+  return html;
+}
+
+/* ============ ROUTER ============ */
+function bindCardGoEvents(){
+  Array.prototype.forEach.call(document.querySelectorAll('[data-go="detail"]'), function(el){
+    el.addEventListener('click', function(e){
+      if(e.target.closest('[data-fav]')) return;
+      location.hash = '#/detail/' + el.getAttribute('data-id');
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-fav]'), function(el){
+    el.addEventListener('click', function(e){
+      e.stopPropagation();
+      var id = el.getAttribute('data-fav');
+      var on = toggleFav(id);
+      el.classList.toggle('on', on);
+    });
+  });
+}
+
+function router(){
+  var raw = location.hash.replace('#/','') || 'home';
+  var parts = raw.split('?');
+  var path = parts[0];
+  var qs = parts[1];
+  var segs = path.split('/');
+  var page = segs[0] || 'home';
+  var app = document.getElementById('app');
+  window.scrollTo(0,0);
+
+  if(page === 'home'){ app.innerHTML = pageHome(); bindHomeEvents(); }
+  else if(page === 'search'){ app.innerHTML = pageSearch(qs); bindSearchEvents(); }
+  else if(page === 'detail'){ app.innerHTML = pageDetail(segs[1]); bindDetailEvents(segs[1]); }
+  else if(page === 'auction'){
+    if(segs[1]){ app.innerHTML = pageDetail(segs[1]); bindDetailEvents(segs[1]); }
+    else { app.innerHTML = pageAuctionList(); bindAuctionEvents(); }
+  }
+  else if(page === 'price'){ app.innerHTML = pagePrice(); bindPriceEvents(); }
+  else if(page === 'finance'){ app.innerHTML = pageFinance(); bindFinanceEvents(); }
+  else if(page === 'register'){ app.innerHTML = pageRegister(); bindRegisterEvents(); }
+  else if(page === 'mypage'){ app.innerHTML = pageMypage(); bindMypageEvents(); }
+  else if(page === 'agent'){ app.innerHTML = pageAgent(); }
+  else { app.innerHTML = pageHome(); bindHomeEvents(); }
+
+  bindCardGoEvents();
+  renderHeader();
+}
+function bindHomeEvents(){
+  var go = document.getElementById('hs-go');
+  if(go){
+    go.addEventListener('click', function(){
+      var kw = document.getElementById('hs-kw').value;
+      var type = document.getElementById('hs-type').value;
+      location.hash = '#/search' + (type!=='all' ? '?deal='+type : '');
+    });
+  }
+}
+
+window.addEventListener('hashchange', router);
+window.addEventListener('DOMContentLoaded', function(){ router(); renderHeader(); });
+router();
+renderHeader();
+</script>
+</body>
+</html>
