@@ -1,0 +1,77 @@
+{
+  "name": "OK복덕방 — 전국 부동산 통합비교",
+  "short_name": "OK복덕방",
+  "description": "매매·전세·월세·직거래·법원경매를 주소 하나로 통합 비교하는 부동산 플랫폼 | 주식회사 아토미아",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#14213D",
+  "theme_color": "#14213D",
+  "lang": "ko",
+  "categories": ["finance", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icons/icon-16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "OK복덕방 메인 화면"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "매물 검색",
+      "short_name": "검색",
+      "description": "전국 부동산 매물 검색",
+      "url": "/#/search",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "법원경매",
+      "short_name": "경매",
+      "description": "법원 경매 물건 조회",
+      "url": "/#/auction",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "중개사 센터",
+      "short_name": "중개사",
+      "description": "공인중개사 매물 등록",
+      "url": "/#/agent",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=kr.co.atomia.richhouse",
+      "id": "kr.co.atomia.richhouse"
+    }
+  ],
+  "prefer_related_applications": false
+}
