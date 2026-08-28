@@ -1,0 +1,13 @@
+# =====================================================
+# OK복덕방 (복덕방.kr) — Cloudflare Pages 리다이렉트 규칙
+# =====================================================
+
+# richhouse.pages.dev → 복덕방.kr (301 영구 이동)
+# ※ Cloudflare Pages 커스텀 도메인 설정 후 아래 규칙 활성화
+# https://richhouse.pages.dev/* https://xn--bn1bl1opra.kr/:splat 301!
+
+# www.복덕방.kr → 복덕방.kr (301 영구 이동)
+# ※ Cloudflare DNS에서 www CNAME 등록 후 자동 처리됨
+
+# SPA 해시 라우팅 폴백 (404 → index.html)
+/* /index.html 200

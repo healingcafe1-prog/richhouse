@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>OK복덕방 관리자 대시보드</title>
+<meta name="robots" content="noindex,nofollow"/>
+<style>
+:root{
+  --brick:#c0392b; --brick-d:#9b2318; --bg:#f5f5f0;
+  --card:#fff; --border:#e0ddd8; --text:#2c2c2c;
+  --success:#27ae60; --warn:#e67e22; --danger:#c0392b; --info:#2980b9;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ── 헤더 */
+header{background:var(--brick);color:#fff;padding:0 24px;height:56px;display:flex;align-items:center;gap:16px;}
+header h1{font-size:18px;font-weight:700;}
+header .badge{background:rgba(255,255,255,.2);border-radius:4px;padding:2px 10px;font-size:12px;}
+header a{color:#fff;text-decoration:none;font-size:13px;margin-left:auto;background:rgba(255,255,255,.15);padding:6px 14px;border-radius:6px;}
+header a:hover{background:rgba(255,255,255,.25);}
+
+/* ── 레이아웃 */
+.admin-wrap{max-width:1100px;margin:0 auto;padding:28px 16px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:740px){.grid2{grid-template-columns:1fr;}}
+
+/* ── 카드 */
+.card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:22px 24px;margin-bottom:20px;}
+.card h2{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card h2 .icon{font-size:18px;}
+
+/* ── 통계 */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr);}}
+.stat-box{background:var(--card);border-radius:10px;border:1px solid var(--border);padding:16px;text-align:center;}
+.stat-box .num{font-size:28px;font-weight:700;color:var(--brick);}
+.stat-box .lbl{font-size:12px;color:#888;margin-top:4px;}
+
+/* ── 폼 */
+label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;margin-top:12px;}
+input,select,textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:7px;font-size:14px;font-family:inherit;}
+textarea{height:100px;resize:vertical;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:500px){.form-row{grid-template-columns:1fr;}}
+
+/* ── 버튼 */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border:none;border-radius:7px;font-size:14px;font-weight:600;cursor:pointer;transition:.15s;}
+.btn-primary{background:var(--brick);color:#fff;}
+.btn-primary:hover{background:var(--brick-d);}
+.btn-success{background:var(--success);color:#fff;}
+.btn-success:hover{background:#229954;}
+.btn-info{background:var(--info);color:#fff;}
+.btn-info:hover{background:#2471a3;}
+.btn-warn{background:var(--warn);color:#fff;}
+.btn-warn:hover{background:#d4680f;}
+.btn-danger{background:var(--danger);color:#fff;}
+.btn-danger:hover{background:#9b2318;}
+.btn-ghost{background:#f0ede8;color:var(--text);}
+.btn-ghost:hover{background:#e0ddd8;}
+.btn-sm{padding:6px 12px;font-size:12px;}
+.btn-block{width:100%;justify-content:center;margin-top:14px;}
+
+/* ── 드롭존 */
+.dropzone{border:2px dashed var(--border);border-radius:10px;padding:32px;text-align:center;cursor:pointer;transition:.2s;color:#888;}
+.dropzone:hover,.dropzone.drag{border-color:var(--brick);background:#fdf5f4;color:var(--brick);}
+.dropzone .dz-icon{font-size:36px;margin-bottom:8px;}
+.dropzone .dz-text{font-size:14px;}
+
+/* ── 테이블 */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{background:#f8f7f4;padding:9px 12px;text-align:left;border-bottom:2px solid var(--border);font-weight:600;white-space:nowrap;}
+td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tr:hover td{background:#fdf9f8;}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;}
+.tag-sale{background:#fde8e8;color:#c0392b;}
+.tag-jeonse{background:#e8f4fd;color:#2980b9;}
+.tag-wolse{background:#e8fdf0;color:#27ae60;}
+.tag-auction{background:#fef3e2;color:#e67e22;}
+.tag-direct{background:#f3e8fd;color:#8e44ad;}
+
+/* ── 알림 */
+.alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:12px;}
+.alert-success{background:#eafaf1;border:1px solid #a9dfbf;color:#1e8449;}
+.alert-error{background:#fdedec;border:1px solid #f1948a;color:#922b21;}
+.alert-info{background:#ebf5fb;border:1px solid #85c1e9;color:#1a5276;}
+.alert-warn{background:#fef9e7;border:1px solid #f9e79f;color:#9a7d0a;}
+
+/* ── 진행바 */
+.progress-wrap{background:#f0ede8;border-radius:99px;height:8px;overflow:hidden;margin-top:8px;}
+.progress-bar{height:100%;background:var(--brick);border-radius:99px;transition:width .3s;}
+
+/* ── JSON 미리보기 */
+pre.json-preview{background:#1e1e1e;color:#d4d4d4;border-radius:8px;padding:14px;font-size:12px;max-height:240px;overflow:auto;line-height:1.5;}
+
+/* ── 탭 */
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:20px;}
+.tab-btn{padding:9px 20px;font-size:14px;font-weight:600;background:none;border:none;cursor:pointer;color:#888;border-bottom:2px solid transparent;margin-bottom:-2px;}
+.tab-btn.active{color:var(--brick);border-bottom-color:var(--brick);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* ── 로그 */
+.log-box{background:#1a1a1a;color:#b0d080;border-radius:8px;padding:14px;font-size:12px;height:180px;overflow-y:auto;font-family:monospace;line-height:1.6;}
+.log-box .log-time{color:#888;}
+.log-box .log-ok{color:#6fcf97;}
+.log-box .log-err{color:#eb5757;}
+.log-box .log-info{color:#56ccf2;}
+
+/* ── 지역 분포 */
+.region-bars{display:flex;flex-direction:column;gap:8px;}
+.region-row{display:flex;align-items:center;gap:10px;}
+.region-name{width:90px;font-size:13px;flex-shrink:0;}
+.region-bar-wrap{flex:1;background:#f0ede8;border-radius:4px;height:12px;overflow:hidden;}
+.region-bar-fill{height:100%;background:var(--brick);border-radius:4px;}
+.region-count{font-size:12px;color:#888;width:40px;text-align:right;flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏠 OK복덕방</h1>
+  <span class="badge">관리자</span>
+  <a href="index.html">← 사이트로</a>
+</header>
+
+<div class="admin-wrap">
+
+  <!-- 통계 -->
+  <div class="stats" id="statsGrid">
+    <div class="stat-box"><div class="num" id="statTotal">-</div><div class="lbl">전체 매물</div></div>
+    <div class="stat-box"><div class="num" id="statNew">-</div><div class="lbl">신규 (업데이트)</div></div>
+    <div class="stat-box"><div class="num" id="statRegions">-</div><div class="lbl">지역 수</div></div>
+    <div class="stat-box"><div class="num" id="statUpdated">-</div><div class="lbl">마지막 갱신</div></div>
+  </div>
+
+  <!-- 탭 -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('upload')">📤 매물 업로드</button>
+    <button class="tab-btn" onclick="switchTab('register')">✏️ 매물 직접 등록</button>
+    <button class="tab-btn" onclick="switchTab('manage')">📋 매물 관리</button>
+    <button class="tab-btn" onclick="switchTab('region')">🗺️ 지역 분포</button>
+    <button class="tab-btn" onclick="switchTab('direct')">🛡️ 직거래 서류심사</button>
+  </div>
+
+  <!-- ─── 탭1: 매물 업로드 -->
+  <div class="tab-panel active" id="tab-upload">
+    <div class="grid2">
+      <div class="card">
+        <h2><span class="icon">📤</span> JSON 파일 업로드</h2>
+        <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+          <div class="dz-icon">📁</div>
+          <div class="dz-text">JSON 파일을 드래그하거나 클릭하여 선택<br><small style="color:#aaa">listings-update.json 형식</small></div>
+        </div>
+        <input type="file" id="fileInput" accept=".json" style="display:none" onchange="handleFileSelect(this)"/>
+        <div id="uploadAlert" style="margin-top:12px;"></div>
+        <div id="uploadPreview" style="margin-top:10px;display:none;">
+          <div style="font-size:13px;font-weight:600;margin-bottom:6px;">미리보기</div>
+          <pre class="json-preview" id="jsonPreview"></pre>
+          <button class="btn btn-success btn-block" onclick="applyUpload()">✅ 적용 (localStorage에 저장)</button>
+          <button class="btn btn-info btn-block" onclick="downloadAsUpdate()">💾 listings-update.json으로 다운로드</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span class="icon">🔄</span> 실시간 업데이트 상태</h2>
+        <div id="updateStatus"></div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;">
+          <button class="btn btn-info" onclick="checkUpdate()">🔍 업데이트 확인</button>
+          <button class="btn btn-warn" onclick="clearCache()">🗑️ 캐시 초기화</button>
+          <button class="btn btn-success" onclick="forceReload()">↺ 강제 새로고침</button>
+        </div>
+        <div style="margin-top:16px;">
+          <div style="font-size:13px;font-weight:600;margin-bottom:8px;">📝 작업 로그</div>
+          <div class="log-box" id="logBox"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 포맷 안내 -->
+    <div class="card">
+      <h2><span class="icon">📖</span> listings-update.json 형식 안내</h2>
+      <pre class="json-preview">{
+  "version": 1,
+  "updated": "2026-08-19T00:00:00+09:00",
+  "listings": [
+    {
+      "id": "L186",
+      "addr": "서울시 마포구 합정동 메세나폴리스 302동",
+      "region": "서울",
+      "type": "아파트",
+      "area": 84,
+      "floor": 12,
+      "rooms": 3,
+      "baths": 2,
+      "park": true,
+      "elev": true,
+      "confirmed": "2026-08-19",
+      "img": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800",
+      "deals": {
+        "sale": { "price": 95000, "count": 2, "verified": true },
+        "jeonse": { "price": 62000, "count": 1, "verified": true },
+        "wolse": null,
+        "direct": null,
+        "auction": null
+      },
+      "realprice": [
+        { "d": "2026-05", "p": 93000 },
+        { "d": "2026-08", "p": 95000 }
+      ],
+      "agent": "합정공인중개사무소",
+      "agentType": "공인중개사",
+      "region2": "서울특별시 마포구",
+      "lat": 37.5492,
+      "lng": 126.9142
+    }
+  ]
+}</pre>
+    </div>
+  </div>
+
+  <!-- ─── 탭2: 직접 등록 -->
+  <div class="tab-panel" id="tab-register">
+    <div class="card">
+      <h2><span class="icon">✏️</span> 매물 직접 등록</h2>
+      <div id="regAlert"></div>
+      <div class="form-row">
+        <div>
+          <label>매물 ID <small style="color:#888">(L186, L187, ...)</small></label>
+          <input type="text" id="r_id" placeholder="L186" oninput="updateIdSuggestion()"/>
+        </div>
+        <div>
+          <label>거래 유형</label>
+          <select id="r_type" onchange="toggleDealFields()">
+            <option>아파트</option><option>오피스텔</option><option>빌라</option>
+            <option>단독주택</option><option>전원주택</option><option>상가임대</option>
+            <option>토지</option><option>임야</option><option>전</option><option>답</option>
+          </select>
+        </div>
+      </div>
+      <label>주소</label>
+      <input type="text" id="r_addr" placeholder="서울시 마포구 합정동 메세나폴리스 302동"/>
+      <div class="form-row">
+        <div>
+          <label>지역 (region)</label>
+          <select id="r_region">
+            <option>서울</option><option>경기</option><option>인천</option>
+            <option>부산</option><option>대구</option><option>광주</option>
+            <option>대전</option><option>울산</option><option>세종</option>
+            <option>충북</option><option>충남</option><option>전북</option>
+            <option>전남</option><option>경북</option><option>경남</option>
+            <option>강원</option><option>제주</option><option>오송</option>
+            <option>오창</option><option>청주 상당</option>
+          </select>
+        </div>
+        <div>
+          <label>세부 지역 (region2)</label>
+          <input type="text" id="r_region2" placeholder="서울특별시 마포구"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>전용면적 (㎡)</label>
+          <input type="number" id="r_area" placeholder="84"/>
+        </div>
+        <div>
+          <label>층수</label>
+          <input type="number" id="r_floor" placeholder="12"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>방 수</label>
+          <input type="number" id="r_rooms" placeholder="3"/>
+        </div>
+        <div>
+          <label>욕실 수</label>
+          <input type="number" id="r_baths" placeholder="2"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>위도 (lat)</label>
+          <input type="number" id="r_lat" placeholder="37.5492" step="0.0001"/>
+        </div>
+        <div>
+          <label>경도 (lng)</label>
+          <input type="number" id="r_lng" placeholder="126.9142" step="0.0001"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>중개사명</label>
+          <input type="text" id="r_agent" placeholder="합정공인중개사무소"/>
+        </div>
+        <div>
+          <label>확인일</label>
+          <input type="date" id="r_confirmed" value="2026-08-19"/>
+        </div>
+      </div>
+      <label>이미지 URL</label>
+      <input type="text" id="r_img" placeholder="https://images.unsplash.com/..."/>
+
+      <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:16px;">
+        <div style="font-size:14px;font-weight:700;margin-bottom:10px;">💰 거래 정보</div>
+        <div class="form-row">
+          <div>
+            <label>매매가 (만원, 빈칸=없음)</label>
+            <input type="number" id="r_sale" placeholder="95000"/>
+          </div>
+          <div>
+            <label>전세가 (만원)</label>
+            <input type="number" id="r_jeonse" placeholder="62000"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label>월세 보증금 (만원)</label>
+            <input type="number" id="r_wolse_dep" placeholder="5000"/>
+          </div>
+          <div>
+            <label>월세 (만원)</label>
+            <input type="number" id="r_wolse_rent" placeholder="120"/>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block" onclick="submitListing()">✅ 매물 등록 (업데이트 목록에 추가)</button>
+    </div>
+  </div>
+
+  <!-- ─── 탭3: 매물 관리 -->
+  <div class="tab-panel" id="tab-manage">
+    <div class="card">
+      <h2><span class="icon">📋</span> 전체 매물 목록</h2>
+      <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center;">
+        <input type="text" id="tblSearch" placeholder="주소·지역·유형 검색..." style="max-width:280px;" oninput="filterTable()"/>
+        <select id="tblRegion" onchange="filterTable()" style="max-width:140px;">
+          <option value="">전체 지역</option>
+        </select>
+        <select id="tblType" onchange="filterTable()" style="max-width:140px;">
+          <option value="">전체 유형</option>
+          <option>아파트</option><option>오피스텔</option><option>빌라</option>
+          <option>단독주택</option><option>전원주택</option><option>상가임대</option>
+          <option>토지</option><option>임야</option><option>전</option><option>답</option>
+        </select>
+        <span id="tblCount" style="font-size:13px;color:#888;"></span>
+        <button class="btn btn-ghost btn-sm" onclick="exportVisible()">📥 CSV 내보내기</button>
+      </div>
+      <div class="tbl-wrap">
+        <table id="listingTable">
+          <thead><tr>
+            <th>ID</th><th>주소</th><th>지역</th><th>유형</th><th>면적</th><th>층</th><th>거래</th><th>가격(만)</th>
+          </tr></thead>
+          <tbody id="tblBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 탭4: 지역 분포 -->
+  <div class="tab-panel" id="tab-region">
+    <div class="card">
+      <h2><span class="icon">🗺️</span> 지역별 매물 분포</h2>
+      <div class="region-bars" id="regionBars"></div>
+    </div>
+    <div class="card">
+      <h2><span class="icon">🏘️</span> 유형별 분포</h2>
+      <div class="region-bars" id="typeBars"></div>
+    </div>
+  </div>
+
+  <!-- ─── 탭5: 직거래 서류심사 -->
+  <div class="tab-panel" id="tab-direct">
+    <!-- 요약 통계 -->
+    <div class="grid2" style="margin-bottom:20px;">
+      <div class="card">
+        <h2><span class="icon">📊</span> 직거래 서류 현황</h2>
+        <div id="direct-stats" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+          <div class="stat-box"><div class="num" id="dv-stat-total" style="font-size:22px;">-</div><div class="lbl">직거래 매물</div></div>
+          <div class="stat-box"><div class="num" id="dv-stat-pending" style="font-size:22px;color:#e67e22;">-</div><div class="lbl">서류 검토 대기</div></div>
+          <div class="stat-box"><div class="num" id="dv-stat-approved" style="font-size:22px;color:#27ae60;">-</div><div class="lbl">안심인증 완료</div></div>
+          <div class="stat-box"><div class="num" id="dv-stat-reports" style="font-size:22px;color:#c0392b;">-</div><div class="lbl">사기 신고</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2><span class="icon">🚨</span> 사기 신고 접수</h2>
+        <div id="dv-fraud-list" style="max-height:180px;overflow-y:auto;">
+          <div style="color:#aaa;font-size:13px;text-align:center;padding:20px;">신고 없음</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 직거래 매물 목록 + 심사 -->
+    <div class="card">
+      <h2><span class="icon">🛡️</span> 직거래 매물 서류심사</h2>
+      <div style="margin-bottom:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <select id="dv-filter-status" onchange="buildDirectPanel()" style="max-width:160px;">
+          <option value="">전체</option>
+          <option value="pending">서류 검토 대기</option>
+          <option value="approved">안심인증 완료</option>
+          <option value="rejected">반려</option>
+        </select>
+        <input type="text" id="dv-search-addr" placeholder="주소 검색..." oninput="buildDirectPanel()" style="max-width:260px;"/>
+        <button class="btn btn-ghost btn-sm" onclick="buildDirectPanel()">🔄 새로고침</button>
+      </div>
+      <div id="dv-listing-list"></div>
+    </div>
+
+    <!-- 선택 매물 심사 패널 -->
+    <div id="dv-review-panel" style="display:none;">
+      <div class="card">
+        <h2><span class="icon">🔍</span> 서류 심사 패널</h2>
+        <div id="dv-review-content"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /admin-wrap -->
+
+<script src="listings.js"></script>
+<script src="direct-verify.js"></script>
+<script src="direct-verify-data.js"></script>
+<script>
+/* ── 탭 전환 */
+function switchTab(name){
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){
+    var tabs = ['upload','register','manage','region','direct'];
+    b.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(function(p){
+    p.classList.toggle('active', p.id === 'tab-'+name);
+  });
+  if(name === 'manage') buildTable();
+  if(name === 'region') buildRegionChart();
+  if(name === 'direct') buildDirectPanel();
+}
+
+/* ── 업데이트 목록 localStorage */
+var UPDATE_KEY = 'ok_listings_update';
+function getUpdateData(){
+  try{
+    var s = localStorage.getItem(UPDATE_KEY);
+    return s ? JSON.parse(s) : null;
+  }catch(e){ return null; }
+}
+function saveUpdateData(listings){
+  var now = new Date().toISOString();
+  localStorage.setItem(UPDATE_KEY, JSON.stringify({ts:Date.now(), listings:listings, updated:now}));
+}
+
+/* ── 통계 업데이트 */
+function refreshStats(){
+  var upd = getUpdateData();
+  var updListings = (upd && upd.listings) ? upd.listings : [];
+  document.getElementById('statTotal').textContent = LISTINGS.length + updListings.length;
+  document.getElementById('statNew').textContent = updListings.length;
+  var regions = new Set(LISTINGS.map(function(x){return x.region;}));
+  updListings.forEach(function(x){ if(x.region) regions.add(x.region); });
+  document.getElementById('statRegions').textContent = regions.size;
+  if(upd && upd.updated){
+    var d = new Date(upd.updated);
+    document.getElementById('statUpdated').textContent = d.getMonth()+1+'/'+d.getDate()+' '+d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
+  } else {
+    document.getElementById('statUpdated').textContent = '없음';
+  }
+}
+
+/* ── 업데이트 상태 */
+function checkUpdate(){
+  var upd = getUpdateData();
+  var el = document.getElementById('updateStatus');
+  if(!upd){
+    el.innerHTML = '<div class="alert alert-info">저장된 업데이트 없음. listings-update.json을 업로드하거나 파일을 드롭하세요.</div>';
+    addLog('info', '저장된 업데이트 데이터 없음');
+    return;
+  }
+  var age = Math.round((Date.now()-upd.ts)/60000);
+  var cnt = (upd.listings||[]).length;
+  var cls = age < 30 ? 'alert-success' : 'alert-warn';
+  el.innerHTML = '<div class="alert '+cls+'">업데이트 데이터: <strong>'+cnt+'개</strong> 매물 | 저장 <strong>'+age+'분</strong> 전 | updated: '+upd.updated+'</div>';
+  addLog('ok', '업데이트 상태 확인: '+cnt+'개, '+age+'분 전');
+  refreshStats();
+}
+
+function clearCache(){
+  localStorage.removeItem(UPDATE_KEY);
+  document.getElementById('updateStatus').innerHTML = '<div class="alert alert-success">캐시가 초기화되었습니다.</div>';
+  addLog('ok', '캐시 초기화 완료');
+  refreshStats();
+}
+
+function forceReload(){
+  clearCache();
+  fetch('listings-update.json?t='+Date.now())
+    .then(function(r){return r.json();})
+    .then(function(data){
+      saveUpdateData(data.listings||[]);
+      addLog('ok', 'listings-update.json 재로드 완료: '+(data.listings||[]).length+'개');
+      checkUpdate();
+    })
+    .catch(function(e){
+      addLog('err', 'listings-update.json 로드 실패: '+e.message);
+    });
+}
+
+/* ── 드롭존 */
+var _uploadData = null;
+var dropzone = document.getElementById('dropzone');
+dropzone.addEventListener('dragover', function(e){ e.preventDefault(); dropzone.classList.add('drag'); });
+dropzone.addEventListener('dragleave', function(){ dropzone.classList.remove('drag'); });
+dropzone.addEventListener('drop', function(e){
+  e.preventDefault(); dropzone.classList.remove('drag');
+  var f = e.dataTransfer.files[0];
+  if(f) readJsonFile(f);
+});
+
+function handleFileSelect(input){
+  if(input.files[0]) readJsonFile(input.files[0]);
+}
+
+function readJsonFile(file){
+  var reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      var data = JSON.parse(e.target.result);
+      _uploadData = data;
+      var items = data.listings || (Array.isArray(data) ? data : []);
+      document.getElementById('jsonPreview').textContent = JSON.stringify(data, null, 2).substring(0, 2000) + (JSON.stringify(data).length > 2000 ? '\n...(생략)' : '');
+      document.getElementById('uploadPreview').style.display = '';
+      setAlert('uploadAlert', 'success', '✅ JSON 파싱 성공: '+items.length+'개 매물 발견');
+      addLog('ok', '파일 로드: '+file.name+', '+items.length+'개 매물');
+    }catch(err){
+      setAlert('uploadAlert', 'error', '❌ JSON 파싱 오류: '+err.message);
+      addLog('err', '파싱 실패: '+err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+function applyUpload(){
+  if(!_uploadData){ alert('파일을 먼저 업로드하세요.'); return; }
+  var items = _uploadData.listings || (Array.isArray(_uploadData) ? _uploadData : []);
+  saveUpdateData(items);
+  setAlert('uploadAlert', 'success', '✅ '+items.length+'개 매물이 localStorage에 저장되었습니다. 사이트를 새로고침하면 반영됩니다.');
+  addLog('ok', '적용 완료: '+items.length+'개 → localStorage');
+  refreshStats();
+}
+
+function downloadAsUpdate(){
+  if(!_uploadData){ alert('파일을 먼저 업로드하세요.'); return; }
+  var items = _uploadData.listings || (Array.isArray(_uploadData) ? _uploadData : []);
+  var out = {version:1, updated: new Date().toISOString(), listings: items};
+  var blob = new Blob([JSON.stringify(out, null, 2)], {type:'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'listings-update.json';
+  a.click();
+  addLog('ok', 'listings-update.json 다운로드');
+}
+
+/* ── 직접 등록 */
+var _pendingListings = [];
+
+function updateIdSuggestion(){
+  // 자동 ID 제안
+}
+
+function submitListing(){
+  var id = document.getElementById('r_id').value.trim();
+  var addr = document.getElementById('r_addr').value.trim();
+  if(!id || !addr){ setAlert('regAlert','error','ID와 주소는 필수입니다.'); return; }
+
+  var saleV = parseFloat(document.getElementById('r_sale').value);
+  var jeonseV = parseFloat(document.getElementById('r_jeonse').value);
+  var wdepV = parseFloat(document.getElementById('r_wolse_dep').value);
+  var wrentV = parseFloat(document.getElementById('r_wolse_rent').value);
+
+  var item = {
+    id: id,
+    addr: addr,
+    region: document.getElementById('r_region').value,
+    type: document.getElementById('r_type').value,
+    area: parseFloat(document.getElementById('r_area').value)||84,
+    floor: parseInt(document.getElementById('r_floor').value)||1,
+    rooms: parseInt(document.getElementById('r_rooms').value)||2,
+    baths: parseInt(document.getElementById('r_baths').value)||1,
+    park: true,
+    elev: true,
+    confirmed: document.getElementById('r_confirmed').value||new Date().toISOString().slice(0,10),
+    img: document.getElementById('r_img').value||'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800',
+    deals:{
+      sale: isNaN(saleV) ? null : {price:saleV, count:1, verified:true},
+      jeonse: isNaN(jeonseV) ? null : {price:jeonseV, count:1, verified:true},
+      wolse: isNaN(wdepV)||isNaN(wrentV) ? null : {deposit:wdepV, rent:wrentV, mgmt:10, count:1, verified:true},
+      direct: null,
+      auction: null
+    },
+    realprice:[{d:new Date().toISOString().slice(0,7), p:saleV||jeonseV||0}],
+    agent: document.getElementById('r_agent').value||'공인중개사',
+    agentType: '공인중개사',
+    region2: document.getElementById('r_region2').value||'',
+    lat: parseFloat(document.getElementById('r_lat').value)||36.5,
+    lng: parseFloat(document.getElementById('r_lng').value)||127.5
+  };
+
+  _pendingListings.push(item);
+  var upd = getUpdateData();
+  var existing = (upd && upd.listings) ? upd.listings : [];
+  // 중복 ID 제거 후 추가
+  var filtered = existing.filter(function(x){ return x.id !== item.id; });
+  filtered.push(item);
+  saveUpdateData(filtered);
+
+  setAlert('regAlert','success','✅ 매물 '+id+'이(가) 업데이트 목록에 추가되었습니다! (총 '+filtered.length+'개)');
+  addLog('ok','등록: '+id+' '+addr);
+  refreshStats();
+}
+
+/* ── 테이블 */
+function buildTable(){
+  var upd = getUpdateData();
+  var updListings = (upd && upd.listings) ? upd.listings : [];
+  var all = LISTINGS.concat(updListings);
+
+  // 지역 옵션
+  var regionSel = document.getElementById('tblRegion');
+  regionSel.innerHTML = '<option value="">전체 지역</option>';
+  var regions = [...new Set(all.map(function(x){return x.region;}))].sort();
+  regions.forEach(function(r){
+    var o = document.createElement('option'); o.value=r; o.textContent=r;
+    regionSel.appendChild(o);
+  });
+
+  renderTable(all);
+}
+
+function filterTable(){
+  var q = document.getElementById('tblSearch').value.toLowerCase();
+  var reg = document.getElementById('tblRegion').value;
+  var typ = document.getElementById('tblType').value;
+  var upd = getUpdateData();
+  var updListings = (upd && upd.listings) ? upd.listings : [];
+  var all = LISTINGS.concat(updListings);
+  var filtered = all.filter(function(x){
+    if(reg && x.region !== reg) return false;
+    if(typ && x.type !== typ) return false;
+    if(q && (x.addr||'').toLowerCase().indexOf(q) < 0 && (x.region||'').toLowerCase().indexOf(q) < 0) return false;
+    return true;
+  });
+  renderTable(filtered);
+}
+
+function renderTable(list){
+  var tbody = document.getElementById('tblBody');
+  document.getElementById('tblCount').textContent = list.length+'개';
+  var rows = '';
+  list.forEach(function(x){
+    var deals = x.deals||{};
+    var tags = '';
+    if(deals.sale) tags += '<span class="tag tag-sale">매매</span> ';
+    if(deals.jeonse) tags += '<span class="tag tag-jeonse">전세</span> ';
+    if(deals.wolse) tags += '<span class="tag tag-wolse">월세</span> ';
+    if(deals.direct) tags += '<span class="tag tag-direct">직거래</span> ';
+    if(deals.auction) tags += '<span class="tag tag-auction">경매</span> ';
+    var price = '-';
+    if(deals.sale) price = (deals.sale.price/10000).toFixed(1)+'억';
+    else if(deals.jeonse) price = (deals.jeonse.price/10000).toFixed(1)+'억';
+    else if(deals.wolse) price = deals.wolse.deposit+'만/'+deals.wolse.rent+'만';
+    rows += '<tr><td style="font-size:12px;color:#888;">'+x.id+'</td><td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+x.addr+'</td><td>'+x.region+'</td><td>'+x.type+'</td><td>'+x.area+'㎡</td><td>'+(x.floor||'-')+'층</td><td>'+tags+'</td><td>'+price+'</td></tr>';
+  });
+  tbody.innerHTML = rows || '<tr><td colspan="8" style="text-align:center;color:#aaa;padding:20px;">매물 없음</td></tr>';
+}
+
+function exportVisible(){
+  var upd = getUpdateData();
+  var updListings = (upd && upd.listings) ? upd.listings : [];
+  var all = LISTINGS.concat(updListings);
+  var csv = 'ID,주소,지역,유형,면적,층,중개사\n';
+  all.forEach(function(x){
+    csv += [x.id,'"'+x.addr+'"',x.region,x.type,x.area,x.floor||'','"'+x.agent+'"'].join(',')+'\n';
+  });
+  var blob = new Blob(['\ufeff'+csv], {type:'text/csv'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'listings_export_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+  addLog('ok', 'CSV 내보내기: '+all.length+'개');
+}
+
+/* ── 지역/유형 차트 */
+function buildRegionChart(){
+  var upd = getUpdateData();
+  var updListings = (upd && upd.listings) ? upd.listings : [];
+  var all = LISTINGS.concat(updListings);
+
+  // 지역
+  var rc = {};
+  all.forEach(function(x){ rc[x.region]=(rc[x.region]||0)+1; });
+  var rEntries = Object.entries(rc).sort(function(a,b){return b[1]-a[1];});
+  var rMax = rEntries[0][1];
+  var rHtml = rEntries.map(function(e){
+    var pct = Math.round(e[1]/rMax*100);
+    return '<div class="region-row"><span class="region-name">'+e[0]+'</span><div class="region-bar-wrap"><div class="region-bar-fill" style="width:'+pct+'%"></div></div><span class="region-count">'+e[1]+'건</span></div>';
+  }).join('');
+  document.getElementById('regionBars').innerHTML = rHtml;
+
+  // 유형
+  var tc = {};
+  all.forEach(function(x){ tc[x.type]=(tc[x.type]||0)+1; });
+  var tEntries = Object.entries(tc).sort(function(a,b){return b[1]-a[1];});
+  var tMax = tEntries[0][1];
+  var tHtml = tEntries.map(function(e){
+    var pct = Math.round(e[1]/tMax*100);
+    return '<div class="region-row"><span class="region-name">'+e[0]+'</span><div class="region-bar-wrap"><div class="region-bar-fill" style="width:'+pct+'%;background:#2980b9"></div></div><span class="region-count">'+e[1]+'건</span></div>';
+  }).join('');
+  document.getElementById('typeBars').innerHTML = tHtml;
+}
+
+/* ── 로그 */
+function addLog(type, msg){
+  var box = document.getElementById('logBox');
+  var now = new Date();
+  var ts = now.getHours()+':'+String(now.getMinutes()).padStart(2,'0')+':'+String(now.getSeconds()).padStart(2,'0');
+  var cls = type==='ok'?'log-ok':type==='err'?'log-err':'log-info';
+  var icon = type==='ok'?'✓':type==='err'?'✗':'ℹ';
+  var div = document.createElement('div');
+  div.innerHTML = '<span class="log-time">'+ts+'</span> <span class="'+cls+'">'+icon+' '+msg+'</span>';
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+/* ── 알림 */
+function setAlert(id, type, msg){
+  var cls = {success:'alert-success',error:'alert-error',info:'alert-info',warn:'alert-warn'}[type];
+  document.getElementById(id).innerHTML = '<div class="alert '+cls+'">'+msg+'</div>';
+}
+
+/* ═══════════════════════════════════════════════
+   직거래 서류심사 패널
+═══════════════════════════════════════════════ */
+function buildDirectPanel(){
+  if(!window.DirectVerify){ setTimeout(buildDirectPanel, 300); return; }
+  var DV = window.DirectVerify;
+
+  // 직거래 매물 필터
+  var upd = getUpdateData();
+  var updListings = (upd && upd.listings) ? upd.listings : [];
+  var all = LISTINGS.concat(updListings);
+  var directListings = all.filter(function(x){ return x.deals && x.deals.direct; });
+
+  // 사기 신고 목록
+  var fraudReports = [];
+  try{ fraudReports = JSON.parse(localStorage.getItem('ok_fraud_reports') || '[]'); }catch(e){}
+
+  // 통계 업데이트
+  var pendingCount = 0, approvedCount = 0;
+  directListings.forEach(function(l){
+    var docs = DV.getDocs(l.id);
+    var hasAny = DV.DOC_TYPES.some(function(dt){ return docs[dt.id] && docs[dt.id].uploaded; });
+    var allApproved = DV.DOC_TYPES.filter(function(d){ return d.required; })
+      .every(function(d){ var s=docs[d.id]; return s && s.status==='approved'; });
+    if(allApproved) approvedCount++;
+    else if(hasAny) pendingCount++;
+  });
+  document.getElementById('dv-stat-total').textContent = directListings.length;
+  document.getElementById('dv-stat-pending').textContent = pendingCount;
+  document.getElementById('dv-stat-approved').textContent = approvedCount;
+  document.getElementById('dv-stat-reports').textContent = fraudReports.length;
+
+  // 사기 신고 목록
+  var fraudEl = document.getElementById('dv-fraud-list');
+  if(fraudReports.length === 0){
+    fraudEl.innerHTML = '<div style="color:#aaa;font-size:13px;text-align:center;padding:20px;">신고 없음</div>';
+  } else {
+    var fHtml = '';
+    fraudReports.slice(-10).reverse().forEach(function(r){
+      fHtml += '<div style="padding:8px 10px;border:1px solid #fde;border-radius:7px;margin-bottom:6px;font-size:12px;">';
+      fHtml += '<b style="color:#c0392b">🚨 '+r.listingId+'</b> <span style="color:#888">'+r.at.slice(0,10)+'</span><br>';
+      fHtml += '<span style="color:#555">'+r.msg+'</span>';
+      fHtml += '<button class="btn btn-sm" style="float:right;font-size:11px;" onclick="dvClearFraud(\''+r.at+'\')">처리완료</button>';
+      fHtml += '</div>';
+    });
+    fraudEl.innerHTML = fHtml;
+  }
+
+  // 필터 적용
+  var statusFilter = document.getElementById('dv-filter-status') ? document.getElementById('dv-filter-status').value : '';
+  var searchAddr = document.getElementById('dv-search-addr') ? document.getElementById('dv-search-addr').value.toLowerCase() : '';
+  var filtered = directListings.filter(function(l){
+    if(searchAddr && (l.addr||'').toLowerCase().indexOf(searchAddr) < 0) return false;
+    if(statusFilter){
+      var docs = DV.getDocs(l.id);
+      var allApproved = DV.DOC_TYPES.filter(function(d){ return d.required; })
+        .every(function(d){ var s=docs[d.id]; return s && s.status==='approved'; });
+      var anyRejected = DV.DOC_TYPES.some(function(d){ var s=docs[d.id]; return s && s.status==='rejected'; });
+      var hasAny = DV.DOC_TYPES.some(function(dt){ return docs[dt.id] && docs[dt.id].uploaded; });
+      if(statusFilter === 'approved' && !allApproved) return false;
+      if(statusFilter === 'rejected' && !anyRejected) return false;
+      if(statusFilter === 'pending' && (allApproved || !hasAny)) return false;
+    }
+    return true;
+  });
+
+  // 목록 렌더
+  var listEl = document.getElementById('dv-listing-list');
+  if(filtered.length === 0){
+    listEl.innerHTML = '<div style="text-align:center;color:#aaa;padding:30px;font-size:14px;">직거래 매물 없음</div>';
+    return;
+  }
+  var html = '';
+  filtered.forEach(function(l){
+    var docs = DV.getDocs(l.id);
+    var score = DV.calcScore(l.id);
+    var grade = DV.getGrade(score);
+    var uploadedCount = DV.DOC_TYPES.filter(function(dt){ return docs[dt.id] && docs[dt.id].uploaded; }).length;
+    var approvedDocCount = DV.DOC_TYPES.filter(function(dt){ var s=docs[dt.id]; return s && s.status==='approved'; }).length;
+    var vd = DV.getVerifyData(l.id);
+    var risks = DV.getActiveRisks(vd || {});
+    html += '<div class="dv-admin-list-row" onclick="dvOpenReview(\''+l.id+'\')" style="cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #e0ddd8;border-radius:10px;margin-bottom:8px;transition:.15s;" onmouseover="this.style.background=\'#fdf9f8\'" onmouseout="this.style.background=\'\'\">';
+    html += '<div style="font-size:28px;flex-shrink:0;">'+grade.icon+'</div>';
+    html += '<div style="flex:1;min-width:0;">';
+    html += '<div style="font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+l.addr+'</div>';
+    html += '<div style="font-size:12px;color:#888;margin-top:2px;">'+l.region+' · '+l.type+' · 직거래 '+(l.deals.direct.dtype||'매매')+'</div>';
+    html += '</div>';
+    html += '<div style="flex-shrink:0;text-align:center;">';
+    html += '<div style="font-size:18px;font-weight:700;color:'+grade.color+'">'+score+'점</div>';
+    html += '<div style="font-size:11px;color:'+grade.color+'">'+grade.label+'</div>';
+    html += '</div>';
+    html += '<div style="flex-shrink:0;text-align:center;font-size:12px;">';
+    html += '<div>서류 <b>'+uploadedCount+'/'+DV.DOC_TYPES.length+'</b>건</div>';
+    html += '<div>승인 <b style="color:#27ae60">'+approvedDocCount+'</b>건</div>';
+    if(risks.length>0) html += '<div style="color:#c0392b;">⚠️ '+risks.length+'건 위험</div>';
+    html += '</div>';
+    html += '<div style="flex-shrink:0;"><button class="btn btn-sm btn-primary">심사하기</button></div>';
+    html += '</div>';
+  });
+  listEl.innerHTML = html;
+}
+
+function dvOpenReview(listingId){
+  if(!window.DirectVerify) return;
+  var listing = LISTINGS.filter(function(l){ return l.id === listingId; })[0];
+  var panel = document.getElementById('dv-review-panel');
+  var content = document.getElementById('dv-review-content');
+  panel.style.display = '';
+  content.innerHTML = window.DirectVerify.renderAdminDocPanel(listingId, listing);
+  panel.scrollIntoView({behavior:'smooth'});
+  window.adminRefreshDocPanel = function(lid){
+    if(lid === listingId) dvOpenReview(lid);
+  };
+}
+
+function dvClearFraud(at){
+  var reports = JSON.parse(localStorage.getItem('ok_fraud_reports') || '[]');
+  reports = reports.filter(function(r){ return r.at !== at; });
+  localStorage.setItem('ok_fraud_reports', JSON.stringify(reports));
+  buildDirectPanel();
+  addLog('ok', '사기 신고 처리 완료');
+}
+
+/* ── 초기화 */
+window.addEventListener('DOMContentLoaded', function(){
+  refreshStats();
+  checkUpdate();
+  addLog('info', 'OK복덕방 관리자 대시보드 로드. 기본 매물: '+LISTINGS.length+'개');
+  // 다음 ID 제안
+  document.getElementById('r_id').value = 'L'+(LISTINGS.length+1+100);
+  document.getElementById('r_confirmed').value = new Date().toISOString().slice(0,10);
+});
+</script>
+</body>
+</html>
