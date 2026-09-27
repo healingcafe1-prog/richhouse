@@ -1,15 +1,18 @@
 /* ============================================================
-   OK복덕방 Service Worker v3
+   OK복덕방 Service Worker v4
    주식회사 아토미아 (Atomia Co., Ltd.)
    Network First — index.html은 항상 네트워크 우선
+   Updated: 2026-09-27 (GitHub Pages 전환)
    ============================================================ */
 
-const CACHE_VERSION = 'richhouse-v3';
+const CACHE_VERSION = 'richhouse-v4';
 const CACHE_URLS = [
   '/manifest.json',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
-  '/og-image.png'
+  '/icons/icon-512-maskable.png',
+  '/og-image.png',
+  '/listings.js'
 ];
 
 /* ── 설치: 핵심 정적 파일 선캐시 (index.html 제외) ── */
