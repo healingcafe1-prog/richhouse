@@ -1,0 +1,45 @@
+/*
+  # 보안 헤더
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(self), camera=(), microphone=()
+  X-XSS-Protection: 1; mode=block
+
+  # 캐시 정책
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  X-Robots-Tag: index, follow
+
+/listings.js
+  Cache-Control: public, max-age=1800, stale-while-revalidate=3600
+
+/direct-verify.js
+  Cache-Control: public, max-age=86400
+
+/direct-verify-data.js
+  Cache-Control: public, max-age=1800
+
+/listings-update.json
+  Cache-Control: no-cache, no-store, must-revalidate
+  Access-Control-Allow-Origin: *
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=86400
+
+/manifest.json
+  Content-Type: application/manifest+json; charset=utf-8
+  Cache-Control: public, max-age=86400
+
+/icons/*
+  Cache-Control: public, max-age=2592000, immutable
+
+/og-image.png
+  Cache-Control: public, max-age=2592000, immutable
+
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Service-Worker-Allowed: /
