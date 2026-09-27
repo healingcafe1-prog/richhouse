@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
 <title>OK복덕방 — 매매·전세·월세·경매 통합비교 | 주식회사 아토미아</title>
 
 <!-- ===== SEO 기본 메타태그 ===== -->
@@ -255,19 +258,23 @@
 ]
 </script>
 
-<!-- ===== Service Worker v2 등록 (PWA 오프라인/설치 지원) ===== -->
+<!-- ===== Service Worker v4 등록 (PWA 오프라인/설치 지원) ===== -->
 <script>
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){
     navigator.serviceWorker.register('/sw.js')
       .then(function(reg){
-        console.log('SW registered:', reg.scope);
-        // 새 버전 감지 시 사용자에게 알림
+        console.log('SW v4 registered:', reg.scope);
+        // 즉시 업데이트 확인
+        reg.update();
+        // 새 버전 감지 시 자동 활성화
         reg.addEventListener('updatefound', function(){
           var newWorker = reg.installing;
           newWorker.addEventListener('statechange', function(){
             if(newWorker.state === 'installed' && navigator.serviceWorker.controller){
-              console.log('새 버전 업데이트 가능');
+              // 이전 SW에 SKIP_WAITING 메시지 전송 → 즉시 교체
+              newWorker.postMessage({ type: 'SKIP_WAITING' });
+              console.log('SW v4 activated');
             }
           });
         });
