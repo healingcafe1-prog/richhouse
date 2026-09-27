@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# 구글봇
+User-agent: Googlebot
+Allow: /
+
+# 네이버봇
+User-agent: Yeti
+Allow: /
+
+# 다음봇
+User-agent: Daum
+Allow: /
+
+# Sitemap 위치
+Sitemap: https://xn--bn1bl1opra.kr/sitemap.xml
